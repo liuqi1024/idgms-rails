@@ -1,0 +1,25 @@
+<div class="well">
+<%= simple_form_for(@game, url: deploy_game_path(@game), :html => {:class => "form-vertical form-horizontal"}) do |f| %>
+
+  <fieldset>
+    <div id="legend" class="">
+      <legend class="">部署新游戏 - 第二步</legend>
+    </div>
+    
+		<%= f.input :code, label: "游戏编码", :required => true, disabled: true, :input_html => {:class => 'input-xlarge'}%>
+		<p/>
+    <div class="input string required">
+      <label class="string required">生成程序</label>
+
+      <!-- File Upload -->
+      <input class="input-file required" id="fileInput" type="file">
+		</div>
+
+  </fieldset>
+
+  <div class="actions">
+    <%= f.submit "上传程序", class: "btn btn-success" %>
+		<%= link_to '返回', games_path, class: "btn" %>
+  </div>
+<% end %>
+</div>

@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Product batch:</b>
+  <%= @transport_batch.product_batch %>
+</p>
+
+<p>
+  <b>Code:</b>
+  <%= @transport_batch.code %>
+</p>
+
+
+<%= link_to 'Edit', edit_transport_batch_path(@transport_batch) %> |
+<%= link_to 'Back', transport_batches_path %>

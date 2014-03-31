@@ -1,0 +1,38 @@
+<div class="row-fluid">
+	<div class="span12">
+		<ul class="nav nav-tabs">
+			<li class="active">
+				<a href="#">待审核游戏</a>
+			</li>
+		</ul>
+	</div>
+</div>
+	
+<table class="table table-striped ">
+  <tr>
+    <th>游戏编码</th>
+    <th>游戏名称</th>
+    <th>当前程序版本</th>
+    <th>Completed at</th>
+    <th>描述</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @games.each do |game| %>
+  <tr>
+    <td><%= link_to game.code, audit_game_path(game) %></td>
+    <td><%= game.name %></td>
+    <td><%= game.version %></td>
+    <td><%= game.status %></td>
+    <td><%= game.completed_at %></td>
+    <td><%= game.desc %></td>
+    <td><%= link_to '审核', audit_game_path(game), class: "label label-info" %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+

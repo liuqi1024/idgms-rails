@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Worksheet:</b>
+  <%= @product_batch.worksheet %>
+</p>
+
+<p>
+  <b>Code:</b>
+  <%= @product_batch.code %>
+</p>
+
+
+<%= link_to 'Edit', edit_product_batch_path(@product_batch) %> |
+<%= link_to 'Back', product_batches_path %>

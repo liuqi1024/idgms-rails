@@ -1,0 +1,34 @@
+<div class="well">
+	<p id="notice"><%= notice %></p>
+
+	<p>
+	  <b>游戏编码:</b>
+	  <%= @game.code %>
+	</p>
+
+	<p>
+	  <b>游戏名称:</b>
+	  <%= @game.name %>
+	</p>
+
+	<p>
+	  <b>当前版本号:</b>
+	  <%= @game.version %>
+	</p>
+
+	<p>
+	  <b>当前状态:</b>
+	  <%= @game.status %>
+	</p>
+
+	<p>
+	  <b>游戏说明:</b>
+	  <%= @game.desc %>
+	</p>
+
+	<div class="actions">
+		<%= link_to "通过", audit_audit_game_path(@game, result: "pass"),  class: "btn btn-success", method: :post %>
+		<%= link_to "驳回", audit_audit_game_path(@game, result: "reject"),  class: "btn btn-danger", method: :post %>
+		<%= link_to '返回', audit_games_path, class: "btn btn-info" %>
+	</div>
+</div>

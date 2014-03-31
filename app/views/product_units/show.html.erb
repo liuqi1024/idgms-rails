@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Game:</b>
+  <%= @product_unit.game %>
+</p>
+
+<p>
+  <b>Product batch:</b>
+  <%= @product_unit.product_batch %>
+</p>
+
+<p>
+  <b>Code:</b>
+  <%= @product_unit.code %>
+</p>
+
+
+<%= link_to 'Edit', edit_product_unit_path(@product_unit) %> |
+<%= link_to 'Back', product_units_path %>

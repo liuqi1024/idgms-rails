@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Game:</b>
+  <%= @game_group.game %>
+</p>
+
+<p>
+  <b>Torrent:</b>
+  <%= @game_group.torrent %>
+</p>
+
+<p>
+  <b>Serial no:</b>
+  <%= @game_group.serial_no %>
+</p>
+
+
+<%= link_to 'Edit', edit_game_group_path(@game_group) %> |
+<%= link_to 'Back', game_groups_path %>

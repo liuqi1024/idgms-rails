@@ -1,0 +1,29 @@
+<h1>Listing worksheets</h1>
+
+<table>
+  <tr>
+    <th>Game</th>
+    <th>Printbatch</th>
+    <th>Completed at</th>
+    <th>Desc</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @worksheets.each do |worksheet| %>
+  <tr>
+    <td><%= worksheet.game %></td>
+    <td><%= worksheet.printbatch %></td>
+    <td><%= worksheet.completed_at %></td>
+    <td><%= worksheet.desc %></td>
+    <td><%= link_to 'Show', worksheet %></td>
+    <td><%= link_to 'Edit', edit_worksheet_path(worksheet) %></td>
+    <td><%= link_to 'Destroy', worksheet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Worksheet', new_worksheet_path %>

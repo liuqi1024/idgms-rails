@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Game:</b>
+  <%= @worksheet.game %>
+</p>
+
+<p>
+  <b>Printbatch:</b>
+  <%= @worksheet.printbatch %>
+</p>
+
+<p>
+  <b>Completed at:</b>
+  <%= @worksheet.completed_at %>
+</p>
+
+<p>
+  <b>Desc:</b>
+  <%= @worksheet.desc %>
+</p>
+
+
+<%= link_to 'Edit', edit_worksheet_path(@worksheet) %> |
+<%= link_to 'Back', worksheets_path %>

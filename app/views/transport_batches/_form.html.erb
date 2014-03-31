@@ -1,0 +1,25 @@
+<%= form_for(@transport_batch) do |f| %>
+  <% if @transport_batch.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@transport_batch.errors.count, "error") %> prohibited this transport_batch from being saved:</h2>
+
+      <ul>
+      <% @transport_batch.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :product_batch %><br />
+    <%= f.text_field :product_batch %>
+  </div>
+  <div class="field">
+    <%= f.label :code %><br />
+    <%= f.text_field :code %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>即开票数据生成管理系统</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+	<style type="text/css">
+		body {
+			padding-top: 60px;
+		 	padding-bottom: 40px;
+		}
+   .sidebar-nav {
+     	padding: 9px 0;
+   }
+	 
+   @media (max-width: 980px) {
+     /* Enable use of floated navbar text */
+     .navbar-text.pull-right {
+       float: none;
+       padding-left: 5px;
+       padding-right: 5px;
+     }
+   }
+ </style>
+
+  <%= csrf_meta_tags %>
+</head>
+
+<body>
+  <%= render "layouts/message" %>
+	
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<%= render "layouts/navigation" %>
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+	  <div class="row-fluid">
+	    <div class="span3">
+				<%= render "layouts/menu" %>
+	    </div>
+	    <div class="span9">
+				<div class="well-white">
+					<!--Body content-->
+					<div class="header">
+						<%= yield :header %>
+					</div>
+          
+					<div class="main">
+						<%#= request.user_agent %>
+						<%#= request.env %>
+						<%= yield %>
+					</div>
+				</div>
+	      <!--Sidebar content-->
+	    </div>
+	  </div>
+	</div>
+	
+</body>
+</html>
+
+
+
+

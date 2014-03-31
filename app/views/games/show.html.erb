@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>游戏编码:</b>
+  <%= @game.code %>
+</p>
+
+<p>
+  <b>游戏名称:</b>
+  <%= @game.name %>
+</p>
+
+<p>
+  <b>当前版本号:</b>
+  <%= @game.version %>
+</p>
+
+<p>
+  <b>当前状态:</b>
+  <%= @game.status %>
+</p>
+
+<p>
+  <b>游戏说明:</b>
+  <%= @game.desc %>
+</p>
+
+
+<%= link_to 'Back', games_path, class: "btn" %>
