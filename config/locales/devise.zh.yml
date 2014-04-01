@@ -1,0 +1,45 @@
+zh:
+  errors:
+    messages:
+      not_found: "没有找到"
+      already_confirmed: "已经确认"
+      not_locked: "没有锁定"
+  devise:
+    failure:
+      already_authenticated: '您已经登录了。'
+      unauthenticated: '请登录。'
+      unconfirmed: '请先激活您的帐号'
+      locked: '您的帐号已被锁定。'
+      invalid: 'Email或密码输入错误'
+      invalid_token: '认证码无效。'
+      timeout: '您已登录超时，请重新登录。'
+      inactive: '您还没有激活帐户。'
+    sessions:
+      signed_in: '欢迎您回来。'
+      signed_out: '已成功退出。'
+    passwords:
+      send_instructions: '几分钟后，您将收到重置密码的电子邮件。'
+      updated: '您的密码已修改成功，请重新登录。'
+    confirmations:
+      send_instructions: '几分钟后，您将收到帐号激活的电子邮件。'
+      confirmed: '您的帐号已经激活，请登录。'
+    registrations:
+      signed_up: '您的帐号已创建，您将收到一封确认邮件，请按邮件中的提示完成注册。'
+      updated: '帐号资料更新成功。'
+      destroyed: '再见！您的帐户已成功注销。我们希望很快可以再见到您。'
+      signed_up_but_unconfirmed: '确认邮件已发到您的邮箱，请按邮件提示激活您的帐号。'
+      signed_up_but_inactive: '您的帐号还没有激活，请先激活帐号再登录。如果没有收到激活邮件，可以申请再发一次。'
+      signed_up_but_locked: '您的帐号已被锁定，请先解锁再登录。如果没有收到解锁邮件，可以申请再发一次。'
+    unlocks:
+      send_instructions: '几分钟后，您将收到一封帐号解锁的邮件。'
+      unlocked: '您的帐号已解锁。'
+    omniauth_callbacks:
+      success: '成功地从 %{kind} 帐号登录。'
+      failure: '用 %{kind} 帐号登录失败： "%{reason}"。'
+    mailer:
+      confirmation_instructions:
+        subject: '确认信息'
+      reset_password_instructions:
+        subject: '重置密码信息'
+      unlock_instructions:
+        subject: '解锁信息'

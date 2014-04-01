@@ -1,0 +1,23 @@
+<%= simple_form_for(@user, :url => user_path(@user), :html => {:class => 'form-horizontal well', :method => 'put'}) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+		<fieldset>
+	    <%= f.input :loginname, required: true, label: "登陆账号",  disabled: true %>
+	    <%= f.input :email, required: true,  disabled: true %>
+	    <%= f.input :name, required: true,  autofocus: true, label: "姓名" %>
+	    <%= f.input :password, required: true, label: "密码" %>
+	    <%= f.input :password_confirmation, required: true, label: "重复密码" %>
+		</fieldset>
+		
+		<fieldset>
+	    <%= f.association :roles, as: :check_boxes %>
+		</fieldset>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit "创建", class: "btn btn-success" %>
+		<%= link_to '返回', users_path, class: "btn btn-info" %>
+  </div>
+<% end %>
+

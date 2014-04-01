@@ -1,5 +1,13 @@
 Idgms::Application.routes.draw do
 
+  devise_for :users, :path_prefix => 'my'
+  
+  resources :users
+
+  resources :tickets
+  
+  resources :roles
+
   resources :game_groups
 
 
@@ -27,8 +35,6 @@ Idgms::Application.routes.draw do
       post 'audit'
     end
   end
-
-  devise_for :users
 
   get "home/index"
 

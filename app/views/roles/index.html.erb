@@ -1,0 +1,24 @@
+<!-- Button -->
+<div class="controls text-right">
+	<%= button_to '创建新角色', new_role_path, class: "btn btn-primary", method: :get %>
+</div>
+
+<table class="table table-striped ">
+  <tr>
+    <th>角色名称</th>
+    <th>权限列表</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @roles.each do |role| %>
+  <tr>
+    <td><%= link_to role.name, role %></td>
+    <td><%#= ticket.game %></td>
+    <td><%= link_to '编辑', edit_role_path(role) %></td>
+    <td><%= link_to '删除', role, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />

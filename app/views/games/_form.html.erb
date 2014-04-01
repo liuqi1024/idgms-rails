@@ -1,17 +1,5 @@
 <div class="well">
-<%= simple_form_for(@game, :html => {:class => "form-vertical form-horizontal"}) do |f| %>
-
-  <% if @game.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@game.errors.count, "error") %> prohibited this game from being saved:</h2>
-
-      <ul>
-      <% @game.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<%= simple_form_for(@game, :html => {:class => "form-horizontal"}) do |f| %>
 
   <fieldset>
     <div id="legend" class="">
@@ -26,7 +14,7 @@
 
   <div class="actions">
     <%= f.submit "下一步", class: "btn btn-success" %>
-		<%= link_to '返回', games_path, class: "btn" %>
+		<%= link_to '返回', games_path, class: "btn btn-info" %>
   </div>
 <% end %>
 </div>

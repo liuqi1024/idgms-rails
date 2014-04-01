@@ -11,7 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140328065837) do
+ActiveRecord::Schema.define(:version => 20140401024116) do
+
+  create_table "game_groups", :force => true do |t|
+    t.integer  "game_id"
+    t.string   "torrent"
+    t.string   "serial_no"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "game_groups", ["game_id"], :name => "index_game_groups_on_game_id"
 
   create_table "game_programs", :force => true do |t|
     t.integer  "game_id"
@@ -33,6 +43,57 @@ ActiveRecord::Schema.define(:version => 20140328065837) do
     t.datetime "updated_at",   :null => false
   end
 
+  create_table "product_batches", :force => true do |t|
+    t.integer  "worksheet_id"
+    t.string   "code"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "product_batches", ["worksheet_id"], :name => "index_product_batches_on_worksheet_id"
+
+  create_table "product_units", :force => true do |t|
+    t.integer  "game_id"
+    t.integer  "product_batch_id"
+    t.string   "code"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "product_units", ["game_id"], :name => "index_product_units_on_game_id"
+  add_index "product_units", ["product_batch_id"], :name => "index_product_units_on_product_batch_id"
+
+  create_table "roles", :force => true do |t|
+    t.string   "name"
+    t.integer  "resource_id"
+    t.string   "resource_type"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "roles", ["name", "resource_type", "resource_id"], :name => "index_roles_on_name_and_resource_type_and_resource_id"
+  add_index "roles", ["name"], :name => "index_roles_on_name"
+
+  create_table "tickets", :force => true do |t|
+    t.string   "ticket_no"
+    t.integer  "game_id"
+    t.integer  "game_group_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "tickets", ["game_group_id"], :name => "index_tickets_on_game_group_id"
+  add_index "tickets", ["game_id"], :name => "index_tickets_on_game_id"
+
+  create_table "transport_batches", :force => true do |t|
+    t.integer  "product_batch_id"
+    t.string   "code"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "transport_batches", ["product_batch_id"], :name => "index_transport_batches_on_product_batch_id"
+
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
     t.string   "encrypted_password",     :default => "", :null => false
@@ -46,9 +107,30 @@ ActiveRecord::Schema.define(:version => 20140328065837) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
+    t.string   "loginname"
+    t.string   "name"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["loginname"], :name => "index_users_on_loginname", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  create_table "users_roles", :id => false, :force => true do |t|
+    t.integer "user_id"
+    t.integer "role_id"
+  end
+
+  add_index "users_roles", ["user_id", "role_id"], :name => "index_users_roles_on_user_id_and_role_id"
+
+  create_table "worksheets", :force => true do |t|
+    t.integer  "game_id"
+    t.string   "printbatch"
+    t.datetime "completed_at"
+    t.text     "desc"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "worksheets", ["game_id"], :name => "index_worksheets_on_game_id"
 
 end

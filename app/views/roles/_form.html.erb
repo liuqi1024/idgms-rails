@@ -1,0 +1,13 @@
+<%= simple_form_for @role, :html => {:class => 'form-horizontal well'} do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :name, label: "角色名称" %>
+  </div>
+	<p></p>
+
+  <div class="form-actions">
+    <%= f.submit "创建", class: "btn btn-success" %>
+		<%= link_to '返回', roles_path, class: "btn btn-info" %>
+  </div>
+<% end %>
