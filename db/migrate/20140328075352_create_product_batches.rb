@@ -3,6 +3,7 @@ class CreateProductBatches < ActiveRecord::Migration
     create_table :product_batches do |t|
       t.references :worksheet
       t.string :code
+      t.string :state
 
       t.timestamps
     end

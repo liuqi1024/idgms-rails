@@ -5,5 +5,10 @@ class Role < ActiveRecord::Base
   scopify
   # attr_accessible :title, :body
   
+  has_many :role_operations
+  has_many :operations, :through => :role_operations
   
+  def operation?(o)
+    self.operations.collect(&:name).include?(o)
+  end
 end

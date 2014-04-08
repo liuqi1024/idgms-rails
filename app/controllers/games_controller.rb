@@ -1,8 +1,11 @@
 class GamesController < ApplicationController
+  load_and_authorize_resource class: 'Game'
+  
   # GET /games
   # GET /games.json
   def index
-    @games = Game.all
+    @state = params[:state].blank?? 'normal':params[:state]
+    @games = Game.where(state: @state)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -41,6 +44,21 @@ class GamesController < ApplicationController
   # POST /games.json
   def create
     @game = Game.new(params[:game])
+    
+    @game.par_value = 10
+    @game.sub_gamesize = 600000
+    @game.pool_size = 120000
+    @game.pack_size = 60
+    @game.packs_per_pool = 2000
+    @game.packs_per_carton = 50
+    @game.first_ticket_no = 0
+    @game.first_pack_no = 1
+    @game.first_pool_no = 1
+    @game.current_pack_no = @game.first_pack_no
+    @game.poolcount_per_printunit = 5
+    
+    @game.state = 'initial'
+    
     if @game.save
       redirect_to upload_game_url(@game)
     end
@@ -55,7 +73,16 @@ class GamesController < ApplicationController
   # 部署程序
   def deploy
     @game = Game.find params[:id]
-    puts 'deploy......'
+    @game.state = 'initial'
+    if @game.version.blank?
+      @game.version = 1
+    else
+      @game.version = params[:game][:version] unless params[:game][:version].blank?
+    end
+    
+    puts 'deploy success......'
+    puts params[:game]
+    @game.save!
     redirect_to :controller => "games", :action => "show", :id => @game
   end
   

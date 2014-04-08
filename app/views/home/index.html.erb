@@ -1,3 +1,6 @@
 <div class="well">
-	<p class="text-center">即开票数据生成管理系统.</p>
+	<p class="text-center"><h3>即开票数据生成管理系统</h3></p>
+	<p class="">你的角色: <%= current_user.roles.collect(&:name).join(" ") %></p>
+	<p class="">可进行的操作: <%= current_user.operations.collect(&:name).join(" ") %></p>
+	
 </div>

@@ -1,6 +1,9 @@
 <ul class="nav nav-list well">
 	<%= nav_to '游戏管理', games_path, 'games' %>
+	
+	<% if can? :audit, Game %>
 	<%= nav_to '游戏审核', audit_games_path, 'audit_games' %>
+	<% end %>
 	<li class="divider">
 	</li>
 	

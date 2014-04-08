@@ -11,19 +11,102 @@
 </p>
 
 <p>
+  <b>票面面值:</b>
+  <%= @game.par_value %>
+</p>
+
+<p>
+  <b>奖组大小:</b>
+  <%= @game.sub_gamesize %>
+</p>
+
+<p>
+  <b>奖池大小:</b>
+  <%= @game.pool_size %>
+</p>
+
+<p>
+  <b>每包票数:</b>
+  <%= @game.pack_size %>
+</p>
+
+<p>
+  <b>每奖池包数:</b>
+  <%= @game.packs_per_pool %>
+</p>
+
+<p>
+  <b>每箱包数:</b>
+  <%= @game.packs_per_carton %>
+</p>
+
+<p>
+  <b>票起始编号:</b>
+  <%= @game.first_ticket_no %>
+</p>
+
+<p>
+  <b>包起始编号:</b>
+  <%= @game.first_pack_no %>
+</p>
+
+<p>
+  <b>奖池起始编号:</b>
+  <%= @game.first_pool_no %>
+</p>
+
+<p>
+  <b>每印刷单元包含奖池数:</b>
+  <%= @game.poolcount_per_printunit %>
+</p>
+
+<p>
+  <b>当前已印刷到的包数:</b>
+  <%= @game.current_pack_no %>
+</p>
+
+<p>
+  <b>包起始编号:</b>
+  <%= @game.first_pack_no %>
+</p>
+
+<p>
   <b>当前版本号:</b>
   <%= @game.version %>
 </p>
 
 <p>
   <b>当前状态:</b>
-  <%= @game.status %>
+	<span class='label label-info'><%= Game::STATES[@game.state.to_sym] %></span>
 </p>
 
-<p>
-  <b>游戏说明:</b>
-  <%= @game.desc %>
-</p>
+<% if @game.state == 'initial' && @game.version == 1 %>
+    <%= link_to '删除游戏', @game, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+<% end %>
+
+<% if @game.state == 'normal' %>
+		<%= link_to '创建工作单', edit_game_path(@game), class: 'btn btn-success' %>
+    <%= link_to '升级版本', edit_game_path(@game), class: 'btn btn-warning' %>
+    <%= link_to '游戏退市', @game, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+<% end %>
+
+<% if @game.state == 'reject' %>
+	<p>
+	  <b>驳回原因:</b>
+		<%= @game.desc %>
+	</p>
+    <%= link_to '重新部署', upload_game_path(@game), class: 'btn btn-warning' %>
+    <%= link_to '删除游戏', @game, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+<% end %>
+
+<% if @game.state == 'delist' %>
+    <%= link_to '升级版本', edit_game_path(@game), class: 'btn btn-warning' %>
+    <%= link_to '游戏退市', @game, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+<% end %>
+
+<%= link_to '返回', games_path, class: "btn btn-info" %>
 
 
-<%= link_to 'Back', games_path, class: "btn" %>
+
+
+

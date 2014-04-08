@@ -1,6 +1,15 @@
-<h1>Editing ticket</h1>
+<%= simple_form_for(@role, :url => role_path(@role), :html => {:class => 'form-horizontal well', :method => 'put' }) do |f| %>
+  <%= f.error_notification %>
 
-<%= render 'form' %>
+  <div class="form-inputs">
+    <%= f.input :name, label: "角色名称" %>
+		
+		<%= f.association :operations, as: :check_boxes, label: "权限" %>
+  </div>
+	<p></p>
 
-<%= link_to 'Show', @ticket %> |
-<%= link_to 'Back', tickets_path %>
+  <div class="form-actions">
+    <%= f.submit "修改", class: "btn btn-success" %>
+		<%= link_to '返回', roles_path, class: "btn btn-info" %>
+  </div>
+<% end %>

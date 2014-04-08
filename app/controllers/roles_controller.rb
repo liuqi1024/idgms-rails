@@ -19,6 +19,21 @@ class RolesController < ApplicationController
     @role = Role.find params[:id]
   end
   
+  def edit
+    @role = Role.find(params[:id])
+    
+  end
+  
+  def update
+    @role = Role.find(params[:id])
+    
+    if @role.update_attributes(params[:role])
+      redirect_to roles_url, notice: 'Role was successfully updated.' 
+    else
+      render action: "edit"
+    end
+  end
+  
   def destroy
     @role = Role.find params[:id]
     @role.destroy

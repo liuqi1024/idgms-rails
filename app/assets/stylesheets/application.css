@@ -19,3 +19,9 @@ color: #666;
 /*a:visited:not(.btn) { color: #666; }*/
 a.btn:visited { color: #fff; }
 a.label:visited { color: #fff; }
+
+textarea.content {
+  height: 55px;
+  width: 60%;
+  margin: 0;
+}

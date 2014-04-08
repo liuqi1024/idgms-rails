@@ -2,6 +2,19 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
+    
+    can :manage, :all if user.admin?
+    can :read, :all
+    
+    if user.operation?('游戏部署')
+      can [:create, :update, :upload, :deploy], Game
+      cannot :audit, Game
+    end
+    
+    if user.operation?('游戏审核')
+      can :audit, Game
+    end
+    
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)

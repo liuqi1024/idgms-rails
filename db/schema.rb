@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140401024116) do
+ActiveRecord::Schema.define(:version => 20140402025944) do
 
   create_table "game_groups", :force => true do |t|
     t.integer  "game_id"
@@ -35,17 +35,36 @@ ActiveRecord::Schema.define(:version => 20140401024116) do
   create_table "games", :force => true do |t|
     t.string   "code"
     t.string   "name"
+    t.integer  "par_value"
+    t.integer  "sub_gamesize"
+    t.integer  "pool_size"
+    t.integer  "pack_size"
+    t.integer  "packs_per_pool"
+    t.integer  "packs_per_carton"
+    t.integer  "first_ticket_no"
+    t.integer  "first_pack_no"
+    t.integer  "first_pool_no"
+    t.integer  "poolcount_per_printunit"
+    t.integer  "current_pack_no"
     t.string   "version"
-    t.string   "status"
+    t.string   "state"
     t.datetime "completed_at"
     t.text     "desc"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+  end
+
+  create_table "operations", :force => true do |t|
+    t.string   "name"
+    t.text     "desc"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "product_batches", :force => true do |t|
     t.integer  "worksheet_id"
     t.string   "code"
+    t.string   "state"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
@@ -62,6 +81,13 @@ ActiveRecord::Schema.define(:version => 20140401024116) do
 
   add_index "product_units", ["game_id"], :name => "index_product_units_on_game_id"
   add_index "product_units", ["product_batch_id"], :name => "index_product_units_on_product_batch_id"
+
+  create_table "role_operations", :force => true do |t|
+    t.integer  "role_id"
+    t.integer  "operation_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
 
   create_table "roles", :force => true do |t|
     t.string   "name"
@@ -126,6 +152,7 @@ ActiveRecord::Schema.define(:version => 20140401024116) do
     t.integer  "game_id"
     t.string   "printbatch"
     t.datetime "completed_at"
+    t.string   "state"
     t.text     "desc"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false

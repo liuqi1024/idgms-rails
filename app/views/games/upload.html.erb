@@ -7,6 +7,10 @@
     </div>
     
 		<%= f.input :code, label: "游戏编码", :required => true, disabled: true, :input_html => {:class => 'input-xlarge'}%>
+		
+		<%= f.input :version, label: "当前版本", :required => true, disabled: true, :input_html => {:class => 'input-xlarge'}%>
+		
+		<%= f.input :version, label: "新游戏版本", :required => true, :input_html => {:class => 'input-xlarge'} unless @game.version.blank? %>
 		<p/>
     <div class="input string required">
       <label class="string required">生成程序</label>
@@ -19,7 +23,7 @@
 
   <div class="actions">
     <%= f.submit "上传程序", class: "btn btn-success" %>
-		<%= link_to '返回', games_path, class: "btn" %>
+		<%= link_to '返回', games_path, class: "btn btn-info" %>
   </div>
 <% end %>
 </div>

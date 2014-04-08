@@ -4,6 +4,7 @@ class CreateWorksheets < ActiveRecord::Migration
       t.references :game
       t.string :printbatch
       t.datetime :completed_at
+      t.string :state
       t.text :desc
 
       t.timestamps

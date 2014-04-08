@@ -12,22 +12,19 @@
   <tr>
     <th>游戏编码</th>
     <th>游戏名称</th>
-    <th>当前程序版本</th>
-    <th>Completed at</th>
-    <th>描述</th>
-    <th></th>
-    <th></th>
+    <th>票面面值</th>
+    <th>奖组大小</th>
+    <th>奖池大小</th>
     <th></th>
   </tr>
 
 <% @games.each do |game| %>
   <tr>
     <td><%= link_to game.code, audit_game_path(game) %></td>
-    <td><%= game.name %></td>
-    <td><%= game.version %></td>
-    <td><%= game.status %></td>
-    <td><%= game.completed_at %></td>
-    <td><%= game.desc %></td>
+    <td><%= link_to game.name, audit_game_path(game) %></td>
+    <td><%= game.par_value %></td>
+    <td><%= game.sub_gamesize %></td>
+    <td><%= game.pool_size %></td>
     <td><%= link_to '审核', audit_game_path(game), class: "label label-info" %></td>
   </tr>
 <% end %>
