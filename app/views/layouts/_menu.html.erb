@@ -2,17 +2,16 @@
 	<%= nav_to '游戏管理', games_path, 'games' %>
 	
 	<% if can? :audit, Game %>
-	<%= nav_to '游戏审核', audit_games_path, 'audit_games' %>
+		<%= nav_to '游戏审核', audit_games_path, 'audit_games' %>
 	<% end %>
 	<li class="divider">
 	</li>
 	
-	<li class="">
-		<a href="#">工作单管理</a>
-	</li>
-	<li>
-		<a href="#">工作单审核</a>
-	</li>
+	<%= nav_to '工作单管理', worksheets_path, 'worksheets' %>
+	
+	<% if can? :audit, Worksheet %>
+		<%= nav_to '工作单审核', audit_worksheets_path, 'audit_worksheets' %>
+	<% end %>
 	<li class="divider">
 	</li>
 	

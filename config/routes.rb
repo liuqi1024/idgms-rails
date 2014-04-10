@@ -20,8 +20,11 @@ Idgms::Application.routes.draw do
   resources :product_batches
 
 
-  resources :worksheets
-
+  resources :worksheets do
+    member do
+      post 'complete'
+    end
+  end
 
   resources :games do
     member do
@@ -31,6 +34,12 @@ Idgms::Application.routes.draw do
   end
 
   resources :audit_games do
+    member do
+      post 'audit'
+    end
+  end
+
+  resources :audit_worksheets do
     member do
       post 'audit'
     end

@@ -15,6 +15,10 @@ class Ability
       can :audit, Game
     end
     
+    if user.operation?('工作单审核')
+      can :audit, Worksheet
+    end
+    
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)

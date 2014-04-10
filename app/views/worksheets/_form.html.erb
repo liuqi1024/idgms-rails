@@ -1,33 +1,26 @@
-<%= form_for(@worksheet) do |f| %>
-  <% if @worksheet.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@worksheet.errors.count, "error") %> prohibited this worksheet from being saved:</h2>
+<%= simple_form_for(@worksheet, :html => {:class => "form-horizontal well"}) do |f| %>
 
-      <ul>
-      <% @worksheet.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <div class="form-inputs">
+		<%= f.association :game, label: "所属游戏", collection: Game.where(state: 'normal'), :required => true, :input_html => {:class => 'input-xlarge'} %>
+		
+		<%= f.input :code, label: "工作单编码", :required => true, :input_html => {:class => 'input-xlarge'} %>
+		
+		<%= f.input :print_unit_count, label: "印刷单元数量", :required => true, :input_html => {:class => 'input-xlarge'}, :wrapper => :append do %>
+			<%= f.input_field :print_unit_count %>
+			<span class="add-on">个</span>
+		<% end %>
+		
+		
+		<%= f.input :printbatch, label: "印刷批次号", :required => true, :input_html => {:class => 'input-xlarge'} %>
+		
+		<%= f.input :generate_at, as: :date , label: "下达日期", :required => true %>
+		
+		<%= f.input :version, label: "版本号", :required => true, :input_html => {:class => 'input-xlarge'} %>
+		
+  </div>
 
-  <div class="field">
-    <%= f.label :game %><br />
-    <%= f.text_field :game %>
-  </div>
-  <div class="field">
-    <%= f.label :printbatch %><br />
-    <%= f.text_field :printbatch %>
-  </div>
-  <div class="field">
-    <%= f.label :completed_at %><br />
-    <%= f.datetime_select :completed_at %>
-  </div>
-  <div class="field">
-    <%= f.label :desc %><br />
-    <%= f.text_area :desc %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="form-actions">
+    <%= f.submit @worksheet.new_record?? "创建" : "修改", class: "btn btn-success" %>
+		<%= link_to '返回', worksheets_path, class: "btn btn-info" %>
   </div>
 <% end %>

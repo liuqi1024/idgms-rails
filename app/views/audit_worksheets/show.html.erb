@@ -8,7 +8,7 @@
 	  <td class="td-show">工作单编码:</td>
 	  <td><%= @worksheet.code %></td>
 	</tr>
-	
+
 	<tr>
 	  <td class="td-show">印刷单元数量:</td>
 	  <td><%= @worksheet.print_unit_count %></td>
@@ -18,7 +18,7 @@
 	  <td class="td-show">印刷总票数:</td>
 	  <td><%= @worksheet.ticket_count %></td>
 	</tr>
-
+	
 	<tr>
 	  <td class="td-show">印刷批次号:</td>
 	  <td><%= @worksheet.printbatch %></td>
@@ -40,19 +40,16 @@
 		</tr>
 	
 	<tr>
-			  <td class="td-show">当前印刷到的pool号:</td>
-			  <td><%= @worksheet.current_pool_no %></td>
-			</tr>
+	  <td class="td-show">当前印刷到的pool号:</td>
+	  <td><%= @worksheet.current_pool_no %></td>
+	</tr>
 		
 	<tr>
 	  <td class="td-show">当前印刷到的奖组号:</td>
 	  <td><%= @worksheet.current_subgame_no %></td>
 	</tr>
 		
-	<tr>
-	  <td class="td-show">当前状态:</td>
-	  <td><span class='label label-info'><%= Worksheet::STATES[@worksheet.state.to_sym] %></span></td>
-	</tr>
+		
 
 	<% if @worksheet.state == 'reject' %>
 		<tr>
@@ -62,21 +59,15 @@
 	<% end %>
 </table>
 
-	<% if @worksheet.state == 'initial' %>
-		<%= link_to '修改工作单', edit_worksheet_path(@worksheet), class: 'btn btn-success' %>
-	  <%= link_to '删除工作单', @worksheet, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-	<% end %>
+<div>
+	<%= simple_form_for(@worksheet, :url => audit_audit_worksheet_path(@worksheet), :html => {:class => "form-horizontal", :method => 'post'}) do |f| %>
+		<%= f.input :desc, label: "驳回理由:", :required => false, :input_html => {:class => "content"} %>
 
-	<% if @worksheet.state == 'normal' %>
-	    <%= link_to '确认完成', complete_worksheet_path(@worksheet), method: :post, data: { confirm: '确认工作单已完成?' }, class: 'btn btn-success' %>
+		<div class="actions">
+			<%= f.submit "通过", class: "btn btn-success", value: "通过" %>
+			<%= f.submit "驳回", class: "btn btn-danger", value: "驳回" %>
+			<%= link_to '返回', audit_worksheets_path, class: "btn btn-info" %>
+			
+		</div>
 	<% end %>
-
-	<% if @worksheet.state == 'reject' %>
-		<%= link_to '修改工作单', edit_worksheet_path(@worksheet), class: 'btn btn-success' %>
-	  <%= link_to '删除工作单', @worksheet, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-	<% end %>
-
-	<% if @worksheet.state == 'delist' %>
-	<% end %>
-
-	<%= link_to '返回', worksheets_path, class: "btn btn-info" %>
+</div>

@@ -1,18 +1,9 @@
-<!-- Button -->
-<div class="controls text-right">
-	<% if can? :create, Game %>
-		<%= button_to '创建工作单', new_worksheet_path, class: "btn btn-primary", method: :get %>
-	<% end %>
-</div>
-
 <div class="row-fluid">
 	<div class="span12">
 		<ul class="nav nav-tabs">
-			<% Worksheet::STATES.each do |state| %>
-				<li class="<%= (state[0].to_s==@state)? 'active': '' %>">
-					<%= link_to state[1], worksheets_path(state: state[0]) %>
+				<li class="active">
+					<a href="#">待审核工作单</a>
 				</li>
-				<% end %>
 		</ul>
 	</div>
 </div>
@@ -35,16 +26,16 @@
 <% @worksheets.each do |worksheet| %>
   <tr>
     <td><%= link_to worksheet.code, worksheet %></td>
-    <td><%= link_to worksheet.game.name,worksheet.game %></td>
+    <td><%= link_to worksheet.game.name, worksheet.game %></td>
     <td><%= worksheet.print_unit_count %></td>
     <td><%= worksheet.ticket_count %></td>
     <td><%= worksheet.printbatch %></td>
-    <td><%= worksheet.generate_at.to_date %></td>
+    <td><%= l worksheet.generate_at %></td>
     <td><%= worksheet.version %></td>
 		<% if params[:state] == 'reject' %>
 			<td><%= worksheet.desc %></td>
 		<% end %>
-		<td><%= link_to '详细信息', worksheet, class: 'label label-info' %></td>
+		<td><%= link_to '详细信息', audit_worksheet_path(worksheet), class: 'label label-info' %></td>
   </tr>
 <% end %>
 </table>

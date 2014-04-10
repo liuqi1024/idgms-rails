@@ -64,9 +64,19 @@ ActiveRecord::Schema.define(:version => 20140402025944) do
   create_table "product_batches", :force => true do |t|
     t.integer  "worksheet_id"
     t.string   "code"
+    t.string   "nation_code"
     t.string   "state"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.integer  "ticket_count"
+    t.integer  "pool_count"
+    t.integer  "subgame_count"
+    t.integer  "start_pack_no"
+    t.integer  "start_pool_no"
+    t.integer  "start_subgame_no"
+    t.integer  "output_pool_no_from"
+    t.integer  "output_pool_no_to"
+    t.datetime "completed_at"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
   end
 
   add_index "product_batches", ["worksheet_id"], :name => "index_product_batches_on_worksheet_id"
@@ -150,12 +160,20 @@ ActiveRecord::Schema.define(:version => 20140402025944) do
 
   create_table "worksheets", :force => true do |t|
     t.integer  "game_id"
+    t.integer  "print_unit_count"
+    t.integer  "ticket_count"
+    t.string   "code"
     t.string   "printbatch"
+    t.string   "version"
+    t.datetime "generate_at"
     t.datetime "completed_at"
     t.string   "state"
     t.text     "desc"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.integer  "current_pack_no"
+    t.integer  "current_pool_no"
+    t.integer  "current_subgame_no"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
   end
 
   add_index "worksheets", ["game_id"], :name => "index_worksheets_on_game_id"

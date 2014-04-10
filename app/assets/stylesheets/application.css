@@ -25,3 +25,8 @@ textarea.content {
   width: 60%;
   margin: 0;
 }
+
+table tr .td-show {
+	width: 25%; 
+	text-align: right;
+}

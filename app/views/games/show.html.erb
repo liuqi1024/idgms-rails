@@ -1,110 +1,108 @@
-<p id="notice"><%= notice %></p>
+<table class="table table-striped table-hover">
+	<tr>
+	  <td class="td-show">游戏编码:</td>
+	  <td><%= @game.code %></td>
+	</tr>
+	  
+	<tr>
+	  <td class="td-show">游戏名称:</td>
+	  <td><%= @game.name %></td>
+	</tr>
 
-<p>
-  <b>游戏编码:</b>
-  <%= @game.code %>
-</p>
+	<tr>
+	  <td class="td-show">票面面值:</td>
+	  <td><%= @game.par_value %></td>
+	</tr>
 
-<p>
-  <b>游戏名称:</b>
-  <%= @game.name %>
-</p>
+	<tr>
+	  <td class="td-show">奖组大小:</td>
+	  <td><%= @game.sub_gamesize %></td>
+	</tr>
 
-<p>
-  <b>票面面值:</b>
-  <%= @game.par_value %>
-</p>
+	<tr>
+	  <td class="td-show">奖池大小:</td>
+	  <td><%= @game.pool_size %></td>
+	</tr>
 
-<p>
-  <b>奖组大小:</b>
-  <%= @game.sub_gamesize %>
-</p>
+	<tr>
+	  <td class="td-show">每包票数:</td>
+	  <td><%= @game.pack_size %></td>
+	</tr>
 
-<p>
-  <b>奖池大小:</b>
-  <%= @game.pool_size %>
-</p>
+	<tr>
+	  <td class="td-show">每奖池包数:</td>
+	  <td><%= @game.packs_per_pool %></td>
+	</tr>
 
-<p>
-  <b>每包票数:</b>
-  <%= @game.pack_size %>
-</p>
+	<tr>
+	  <td class="td-show">每箱包数:</td>
+	  <td><%= @game.packs_per_carton %></td>
+	</tr>
 
-<p>
-  <b>每奖池包数:</b>
-  <%= @game.packs_per_pool %>
-</p>
+	<tr>
+	  <td class="td-show">票起始编号:</td>
+	  <td><%= @game.first_ticket_no %></td>
+	</tr>
 
-<p>
-  <b>每箱包数:</b>
-  <%= @game.packs_per_carton %>
-</p>
+	<tr>
+	  <td class="td-show">包起始编号:</td>
+	  <td><%= @game.first_pack_no %></td>
+	</tr>
 
-<p>
-  <b>票起始编号:</b>
-  <%= @game.first_ticket_no %>
-</p>
+	<tr>
+	  <td class="td-show">奖池起始编号:</td>
+	  <td><%= @game.first_pool_no %></td>
+	</tr>
 
-<p>
-  <b>包起始编号:</b>
-  <%= @game.first_pack_no %>
-</p>
+	<tr>
+	  <td class="td-show">每印刷单元包含奖池数:</td>
+	  <td><%= @game.poolcount_per_printunit %></td>
+	</tr>
 
-<p>
-  <b>奖池起始编号:</b>
-  <%= @game.first_pool_no %>
-</p>
+	<tr>
+	  <td class="td-show">当前已印刷到的包数:</td>
+	  <td><%= @game.current_pack_no %></td>
+	</tr>
 
-<p>
-  <b>每印刷单元包含奖池数:</b>
-  <%= @game.poolcount_per_printunit %>
-</p>
+	<tr>
+	  <td class="td-show">当前版本号:</td>
+	  <td><%= @game.version %></td>
+	</tr>
 
-<p>
-  <b>当前已印刷到的包数:</b>
-  <%= @game.current_pack_no %>
-</p>
+	<tr>
+	  <td class="td-show">当前状态:</td>
+	  <td><span class='label label-info'><%= Game::STATES[@game.state.to_sym] %></span></td>
+	</tr>
 
-<p>
-  <b>包起始编号:</b>
-  <%= @game.first_pack_no %>
-</p>
+	<% if @game.state == 'reject' %>
+		<tr>
+		  <td class="td-show">驳回原因:</td>
+		  <td><%= @game.desc %></td>
+		</tr>
+	<% end %>
+</table>
 
-<p>
-  <b>当前版本号:</b>
-  <%= @game.version %>
-</p>
+	<% if @game.state == 'initial' && @game.version == 1 %>
+	    <%= link_to '删除游戏', @game, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+	<% end %>
 
-<p>
-  <b>当前状态:</b>
-	<span class='label label-info'><%= Game::STATES[@game.state.to_sym] %></span>
-</p>
+	<% if @game.state == 'normal' %>
+			<%= link_to '创建工作单', edit_game_path(@game), class: 'btn btn-success' %>
+	    <%= link_to '升级版本', upload_game_path(@game), class: 'btn btn-warning' %>
+	    <%= link_to '游戏退市', @game, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+	<% end %>
 
-<% if @game.state == 'initial' && @game.version == 1 %>
-    <%= link_to '删除游戏', @game, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-<% end %>
+	<% if @game.state == 'reject' %>
+	    <%= link_to '重新部署', upload_game_path(@game), class: 'btn btn-warning' %>
+	    <%= link_to '删除游戏', @game, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+	<% end %>
 
-<% if @game.state == 'normal' %>
-		<%= link_to '创建工作单', edit_game_path(@game), class: 'btn btn-success' %>
-    <%= link_to '升级版本', edit_game_path(@game), class: 'btn btn-warning' %>
-    <%= link_to '游戏退市', @game, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-<% end %>
+	<% if @game.state == 'delist' %>
+	    <%= link_to '生成下市数据', edit_game_path(@game), class: 'btn btn-warning' %>
+	<% end %>
 
-<% if @game.state == 'reject' %>
-	<p>
-	  <b>驳回原因:</b>
-		<%= @game.desc %>
-	</p>
-    <%= link_to '重新部署', upload_game_path(@game), class: 'btn btn-warning' %>
-    <%= link_to '删除游戏', @game, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-<% end %>
+	<%= link_to '返回', games_path, class: "btn btn-info" %>
 
-<% if @game.state == 'delist' %>
-    <%= link_to '升级版本', edit_game_path(@game), class: 'btn btn-warning' %>
-    <%= link_to '游戏退市', @game, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-<% end %>
-
-<%= link_to '返回', games_path, class: "btn btn-info" %>
 
 
 

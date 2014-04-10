@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   
   
   def admin?
-    self.role?('admin')
+    self.role?('系统管理员')
   end
   
   def role?(r)

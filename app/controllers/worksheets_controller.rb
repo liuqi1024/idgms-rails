@@ -1,8 +1,11 @@
 class WorksheetsController < ApplicationController
+  load_and_authorize_resource class: 'Worksheet'
+  
   # GET /worksheets
   # GET /worksheets.json
   def index
-    @worksheets = Worksheet.all
+    @state = params[:state].blank?? 'normal':params[:state]
+    @worksheets = Worksheet.where(state: @state)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -41,6 +44,12 @@ class WorksheetsController < ApplicationController
   # POST /worksheets.json
   def create
     @worksheet = Worksheet.new(params[:worksheet])
+    @worksheet.state = 'initial'
+    
+    #根据印刷单元的数量和game的参数配置，算出总的票数
+    print_unit_count = @worksheet.print_unit_count
+    @game = @worksheet.game
+    @worksheet.ticket_count = @game.poolcount_per_printunit * @game.pool_size * print_unit_count
 
     respond_to do |format|
       if @worksheet.save
@@ -80,4 +89,21 @@ class WorksheetsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  # 确认工作单完成
+  def complete
+    @worksheet = Worksheet.find params[:id]
+    @worksheet.state = 'delist'
+    
+    @worksheet.save!
+    redirect_to worksheets_url
+  end
 end
+
+
+
+
+
+
+
+
