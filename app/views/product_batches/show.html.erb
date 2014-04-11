@@ -1,15 +1,59 @@
-<p id="notice"><%= notice %></p>
+<table class="table table-striped table-hover">
+	<tr>
+	  <td class="td-show">所属游戏:</td>
+	  <td><%= @product_batch.game.name %></td>
+	</tr>
+	
+	<tr>
+	  <td class="td-show">所属工作单:</td>
+	  <td><%= @product_batch.worksheet.code %></td>
+	</tr>
+	
+	<tr>
+	  <td class="td-show">工作单编码:</td>
+	  <td><%= @product_batch.code %></td>
+	</tr>
+	
+	<tr>
+	  <td class="td-show">印刷单元数量:</td>
+	  <td><%= @product_batch.print_unit_count %></td>
+	</tr>
+	
+	<tr>
+	  <td class="td-show">印刷总票数:</td>
+	  <td><%= @product_batch.ticket_count %></td>
+	</tr>
+		
+	<tr>
+	  <td class="td-show">当前状态:</td>
+	  <td><span class='label label-info'><%= Worksheet::STATES[@product_batch.state.to_sym] %></span></td>
+	</tr>
 
-<p>
-  <b>Worksheet:</b>
-  <%= @product_batch.worksheet %>
-</p>
+	<% if @product_batch.state == 'reject' %>
+		<tr>
+		  <td class="td-show">驳回原因:</td>
+		  <td><%= @product_batch.desc %></td>
+		</tr>
+	<% end %>
+</table>
 
-<p>
-  <b>Code:</b>
-  <%= @product_batch.code %>
-</p>
+<% if @product_batch.state == 'initial' %>
+	<%= link_to '修改生产批次', edit_product_batch_path(@product_batch), class: 'btn btn-success' %>
+  <%= link_to '删除生产批次', @product_batch, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+<% end %>
 
+<% if @product_batch.state == 'normal' %>
+	<%= link_to '创建生产批次', new_product_batch_path(worksheet_id: @product_batch), class: 'btn btn-primary' %>
+  <%= link_to '确认完成', complete_worksheet_path(@product_batch), method: :post, data: { confirm: '确认工作单已完成?' }, class: 'btn btn-success' %>
+<% end %>
 
-<%= link_to 'Edit', edit_product_batch_path(@product_batch) %> |
-<%= link_to 'Back', product_batches_path %>
+<% if @product_batch.state == 'reject' %>
+	<%= link_to '修改工作单', edit_product_batch_path(@product_batch), class: 'btn btn-success' %>
+  <%= link_to '删除工作单', @product_batch, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+<% end %>
+
+<% if @product_batch.state == 'delist' %>
+<% end %>
+
+<%= link_to '返回', worksheets_path, class: "btn btn-info" %>
+

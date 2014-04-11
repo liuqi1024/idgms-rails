@@ -5,9 +5,9 @@
 		
 		<%= f.input :code, label: "工作单编码", :required => true, :input_html => {:class => 'input-xlarge'} %>
 		
-		<%= f.input :print_unit_count, label: "印刷单元数量", :required => true, :input_html => {:class => 'input-xlarge'}, :wrapper => :append do %>
-			<%= f.input_field :print_unit_count %>
-			<span class="add-on">个</span>
+		<%= f.input :ticket_count, label: "印刷总票数", :required => true, :input_html => {:class => 'input-xlarge'}, :wrapper => :append do %>
+			<%= f.input_field :ticket_count %>
+			<span class="add-on">张</span>
 		<% end %>
 		
 		

@@ -2,7 +2,8 @@ class ProductBatchesController < ApplicationController
   # GET /product_batches
   # GET /product_batches.json
   def index
-    @product_batches = ProductBatch.all
+    @state = params[:state].blank?? 'normal':params[:state]
+    @product_batches = ProductBatch.where(state: @state)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -25,6 +26,11 @@ class ProductBatchesController < ApplicationController
   # GET /product_batches/new.json
   def new
     @product_batch = ProductBatch.new
+    unless params[:worksheet_id].blank?
+      @worksheet = Worksheet.find(params[:worksheet_id])
+      @product_batch.worksheet = @worksheet
+    end
+    
 
     respond_to do |format|
       format.html # new.html.erb
@@ -41,6 +47,15 @@ class ProductBatchesController < ApplicationController
   # POST /product_batches.json
   def create
     @product_batch = ProductBatch.new(params[:product_batch])
+    worksheet = Worksheet.find(params[:product_batch][:worksheet_id])
+    
+    game = worksheet.game
+    @product_batch.state = 'initial'
+    @product_batch.game = game
+    
+    #根据印刷单元的数量和game的参数配置，算出总的票数
+    print_unit_count = params[:product_batch][:print_unit_count]
+    @product_batch.ticket_count = game.poolcount_per_printunit * game.pool_size * print_unit_count.to_i
 
     respond_to do |format|
       if @product_batch.save
@@ -57,6 +72,9 @@ class ProductBatchesController < ApplicationController
   # PUT /product_batches/1.json
   def update
     @product_batch = ProductBatch.find(params[:id])
+    if @product_batch.state == 'reject'
+      @product_batch.state = 'initial'
+    end
 
     respond_to do |format|
       if @product_batch.update_attributes(params[:product_batch])

@@ -12,7 +12,6 @@
   <tr>
     <th>工作单编码</th>
     <th>所属游戏</th>
-    <th>印刷单元数</th>
     <th>总票数</th>
     <th>印刷批次号</th>
     <th>下达日期</th>
@@ -25,9 +24,8 @@
 
 <% @worksheets.each do |worksheet| %>
   <tr>
-    <td><%= link_to worksheet.code, worksheet %></td>
+    <td><%= link_to worksheet.code, audit_worksheet_path(worksheet) %></td>
     <td><%= link_to worksheet.game.name, worksheet.game %></td>
-    <td><%= worksheet.print_unit_count %></td>
     <td><%= worksheet.ticket_count %></td>
     <td><%= worksheet.printbatch %></td>
     <td><%= l worksheet.generate_at %></td>

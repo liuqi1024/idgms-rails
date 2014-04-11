@@ -47,9 +47,9 @@ class WorksheetsController < ApplicationController
     @worksheet.state = 'initial'
     
     #根据印刷单元的数量和game的参数配置，算出总的票数
-    print_unit_count = @worksheet.print_unit_count
-    @game = @worksheet.game
-    @worksheet.ticket_count = @game.poolcount_per_printunit * @game.pool_size * print_unit_count
+    # print_unit_count = @worksheet.print_unit_count
+    # @game = @worksheet.game
+    # @worksheet.ticket_count = @game.poolcount_per_printunit * @game.pool_size * print_unit_count
 
     respond_to do |format|
       if @worksheet.save
@@ -66,6 +66,10 @@ class WorksheetsController < ApplicationController
   # PUT /worksheets/1.json
   def update
     @worksheet = Worksheet.find(params[:id])
+    if @worksheet.state == 'reject'
+      @worksheet.state = 'initial'
+    end
+    
 
     respond_to do |format|
       if @worksheet.update_attributes(params[:worksheet])

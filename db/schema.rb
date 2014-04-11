@@ -62,11 +62,13 @@ ActiveRecord::Schema.define(:version => 20140402025944) do
   end
 
   create_table "product_batches", :force => true do |t|
+    t.integer  "game_id"
     t.integer  "worksheet_id"
     t.string   "code"
     t.string   "nation_code"
     t.string   "state"
     t.integer  "ticket_count"
+    t.integer  "print_unit_count"
     t.integer  "pool_count"
     t.integer  "subgame_count"
     t.integer  "start_pack_no"
@@ -74,9 +76,12 @@ ActiveRecord::Schema.define(:version => 20140402025944) do
     t.integer  "start_subgame_no"
     t.integer  "output_pool_no_from"
     t.integer  "output_pool_no_to"
+    t.string   "print_unit_totals"
+    t.string   "print_unit_completes"
     t.datetime "completed_at"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
+    t.text     "desc"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
   end
 
   add_index "product_batches", ["worksheet_id"], :name => "index_product_batches_on_worksheet_id"

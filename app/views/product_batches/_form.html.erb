@@ -1,25 +1,20 @@
-<%= form_for(@product_batch) do |f| %>
-  <% if @product_batch.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@product_batch.errors.count, "error") %> prohibited this product_batch from being saved:</h2>
+<%= simple_form_for(@product_batch, :html => {:class => "form-horizontal well"}) do |f| %>
 
-      <ul>
-      <% @product_batch.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <div class="form-inputs">
+		<%= f.association :worksheet, label: "所属工作单", collection: Worksheet.where(state: 'normal'), 
+				:label_method => :name_with_game, :required => true, :input_html => {:class => 'input-xlarge'} %>
+		
+		<%= f.input :code, label: "生产批次编码", :required => true, :input_html => {:class => 'input-xlarge'} %>
+		
+		<%= f.input :print_unit_count, label: "印刷单元数量", :required => true, :input_html => {:class => 'input-xlarge'}, :wrapper => :append do %>
+			<%= f.input_field :print_unit_count %>
+			<span class="add-on">个</span>
+		<% end %>
+		
+  </div>
 
-  <div class="field">
-    <%= f.label :worksheet %><br />
-    <%= f.text_field :worksheet %>
-  </div>
-  <div class="field">
-    <%= f.label :code %><br />
-    <%= f.text_field :code %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="form-actions">
+    <%= f.submit @product_batch.new_record?? "创建" : "修改", class: "btn btn-success" %>
+		<%= link_to '返回', product_batches_path, class: "btn btn-info" %>
   </div>
 <% end %>

@@ -1,18 +1,9 @@
-<!-- Button -->
-<div class="controls text-right">
-	<% if can? :create, Game %>
-		<%= button_to '创建生产批次', new_product_batch_path, class: "btn btn-primary", method: :get %>
-	<% end %>
-</div>
-
 <div class="row-fluid">
 	<div class="span12">
 		<ul class="nav nav-tabs">
-			<% ProductBatch::STATES.each do |state| %>
-				<li class="<%= (state[0].to_s == @state)? 'active': '' %>">
-					<%= link_to state[1], product_batches_path(state: state[0]) %>
+				<li class="active">
+					<a href="#">待审核生产批次</a>
 				</li>
-				<% end %>
 		</ul>
 	</div>
 </div>
@@ -32,7 +23,7 @@
 
 <% @product_batches.each do |product_batch| %>
   <tr>
-    <td><%= link_to product_batch.code, product_batch %></td>
+    <td><%= link_to product_batch.code, audit_product_batch_path(product_batch) %></td>
     <td><%= link_to product_batch.worksheet.game.name, product_batch.worksheet.game %></td>
     <td><%= link_to product_batch.worksheet.code, product_batch.worksheet %></td>
 		<td><%= product_batch.print_unit_count %></td>
@@ -40,9 +31,11 @@
 		<% if params[:state] == 'reject' %>
 			<td><%#= product_batch.desc %></td>
 		<% end %>
-		<td><%= link_to '详细信息', product_batch, class: 'label label-info' %></td>
+		<td><%= link_to '详细信息', audit_product_batch_path(product_batch), class: 'label label-info' %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
+
+

@@ -45,6 +45,12 @@ Idgms::Application.routes.draw do
     end
   end
 
+  resources :audit_product_batches do
+    member do
+      post 'audit'
+    end
+  end
+  
   get "home/index"
 
   # The priority is based upon order of creation:
