@@ -4,8 +4,9 @@ class CreateProductBatches < ActiveRecord::Migration
       t.references :game
       t.references :worksheet
       t.string  :code
-      t.string  :nation_code
+      t.string  :nation_code        # 35 - SG;
       t.string  :state
+      t.string  :progress           #当前进展(数据生成 - 检测 - 印刷数据 - 检测)
       t.integer :ticket_count
       t.integer :print_unit_count   #印刷单元数量
       t.integer :pool_count         #< PoolCount >：奖池Pool 的个数

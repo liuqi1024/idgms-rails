@@ -40,15 +40,22 @@ class TransportBatchesController < ApplicationController
   # POST /transport_batches
   # POST /transport_batches.json
   def create
-    @transport_batch = TransportBatch.new(params[:transport_batch])
+    # @transport_batch = TransportBatch.new(params[:transport_batch])
+    @prodcut_batch = ProductBatch.find(params[:product_batch_id])
+    @transport_batch = TransportBatch.new
+    @transport_batch.product_batch = @prodcut_batch
+    @transport_batch.start_pool_no = 100
+    @transport_batch.end_pool_no = 300
+    @transport_batch.code = SecureRandom.random_number(10**6)
+    array = Array.new
+    5.times {array << rand(10)}
+    @transport_batch.print_unit_completes = array.to_s
 
     respond_to do |format|
       if @transport_batch.save
-        format.html { redirect_to @transport_batch, notice: 'Transport batch was successfully created.' }
-        format.json { render json: @transport_batch, status: :created, location: @transport_batch }
+        format.html { redirect_to @prodcut_batch, notice: 'Transport batch was successfully created.' }
       else
         format.html { render action: "new" }
-        format.json { render json: @transport_batch.errors, status: :unprocessable_entity }
       end
     end
   end

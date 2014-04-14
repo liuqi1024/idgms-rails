@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140402025944) do
+ActiveRecord::Schema.define(:version => 20140414073346) do
 
   create_table "game_groups", :force => true do |t|
     t.integer  "game_id"
@@ -61,12 +61,24 @@ ActiveRecord::Schema.define(:version => 20140402025944) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "patches", :force => true do |t|
+    t.string   "code"
+    t.integer  "product_batch_id"
+    t.integer  "ticket_count"
+    t.string   "pack_no_totals"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "patches", ["product_batch_id"], :name => "index_patches_on_product_batch_id"
+
   create_table "product_batches", :force => true do |t|
     t.integer  "game_id"
     t.integer  "worksheet_id"
     t.string   "code"
     t.string   "nation_code"
     t.string   "state"
+    t.string   "progress"
     t.integer  "ticket_count"
     t.integer  "print_unit_count"
     t.integer  "pool_count"
@@ -129,8 +141,11 @@ ActiveRecord::Schema.define(:version => 20140402025944) do
   create_table "transport_batches", :force => true do |t|
     t.integer  "product_batch_id"
     t.string   "code"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.integer  "start_pool_no"
+    t.integer  "end_pool_no"
+    t.string   "print_unit_completes"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
   end
 
   add_index "transport_batches", ["product_batch_id"], :name => "index_transport_batches_on_product_batch_id"

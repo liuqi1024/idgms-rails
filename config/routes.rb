@@ -1,5 +1,8 @@
 Idgms::Application.routes.draw do
 
+  resources :patches
+
+
   devise_for :users, :path_prefix => 'my'
   
   resources :users
@@ -48,6 +51,16 @@ Idgms::Application.routes.draw do
   resources :audit_product_batches do
     member do
       post 'audit'
+    end
+  end
+  
+  resources :data_product do
+    member do
+      post 'data_generate'
+      post 'data_detect'
+      post 'print_generate'
+      post 'print_detect'
+      post 'upload'
     end
   end
   

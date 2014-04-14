@@ -6,6 +6,8 @@
 		
 		<%= f.input :code, label: "生产批次编码", :required => true, :input_html => {:class => 'input-xlarge'} %>
 		
+		<%= f.input :nation_code, label: "印厂编码", as: :select, collection: ProductBatch::NATION_CODE, :required => true, :input_html => {:class => 'input-xlarge'} %>
+		
 		<%= f.input :print_unit_count, label: "印刷单元数量", :required => true, :input_html => {:class => 'input-xlarge'}, :wrapper => :append do %>
 			<%= f.input_field :print_unit_count %>
 			<span class="add-on">个</span>

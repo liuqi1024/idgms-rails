@@ -10,13 +10,27 @@
 	</tr>
 	
 	<tr>
-	  <td class="td-show">工作单编码:</td>
-	  <td><%= @product_batch.code %></td>
-	</tr>
+		  <td class="td-show">工作单编码:</td>
+		  <td><%= @product_batch.code %></td>
+		</tr>
 	
+	<tr>
+		  <td class="td-show">印厂编码:</td>
+		  <td><%= @product_batch.nation_code %></td>
+		</tr>
+		
 	<tr>
 	  <td class="td-show">印刷单元数量:</td>
 	  <td><%= @product_batch.print_unit_count %></td>
+	</tr>
+	
+	<tr>
+	  <td class="td-show">总印刷单元列表:</td>
+	  <td><%= @product_batch.print_unit_totals %></td>
+	</tr>
+	<tr>
+	  <td class="td-show">已完成印刷单元列表:</td>
+	  <td><%= @product_batch.print_unit_completes %></td>
 	</tr>
 	
 	<tr>
@@ -42,9 +56,45 @@
   <%= link_to '删除生产批次', @product_batch, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
 <% end %>
 
+<% if @product_batch.progress == 5.to_s %>
+	<div class="well">
+		<%= link_to '取运输批次文件', transport_batches_path(product_batch_id: @product_batch), method: :post, class: 'btn btn-primary' %>
+		<%= link_to '取补号文件', patches_path(product_batch_id: @product_batch), method: :post, class: 'btn btn-warning' %>
+		<% if @product_batch.complete? %>
+			<%= link_to '确认完成', complete_worksheet_path(@product_batch), method: :post, data: { confirm: '确认工作单已完成?' }, class: 'btn btn-success' %>
+		<% end %>
+	</div>
+<% end %>
+
 <% if @product_batch.state == 'normal' %>
-	<%= link_to '创建生产批次', new_product_batch_path(worksheet_id: @product_batch), class: 'btn btn-primary' %>
-  <%= link_to '确认完成', complete_worksheet_path(@product_batch), method: :post, data: { confirm: '确认工作单已完成?' }, class: 'btn btn-success' %>
+	<div class="well">
+		<div class="btn-group">
+			<%= link_to '生成数据 > ', data_generate_data_product_path(@product_batch), method: :post, 
+								class: @product_batch.progress.blank?? 'btn btn-success' : 'btn btn-danger disabled' %>
+									
+			<%= link_to '数据检测 > ', data_detect_data_product_path(@product_batch), method: :post, 
+								class: @product_batch.progress == '1'? 'btn btn-success' : 'btn btn-danger disabled' %>
+			
+			<%= link_to '生成印刷数据 > ', print_generate_data_product_path(@product_batch), method: :post, 
+								class: @product_batch.progress == '2'? 'btn btn-success' : 'btn btn-danger disabled' %>
+			
+			<%= link_to '印刷数据检测 > ', print_detect_data_product_path(@product_batch), method: :post, 
+								class: @product_batch.progress == '3'? 'btn btn-success' : 'btn btn-danger disabled' %>
+			
+			<%= link_to '上传生产数据', upload_data_product_path(@product_batch), method: :post, 
+								class: @product_batch.progress == '4'? 'btn btn-success' : 'btn btn-danger disabled' %>
+		</div>
+		
+		<div style="float:right;">
+			<%= link_to '样票数据', '', class: 'btn btn-inverse' %>
+			<%= link_to '样票测试数据', '', class: 'btn btn-inverse' %>
+		</div>
+		
+		<div class="result">
+			<hr/>
+			返回结果: <%= params[:result] %>
+		</div>
+	</div>
 <% end %>
 
 <% if @product_batch.state == 'reject' %>
@@ -53,6 +103,50 @@
 <% end %>
 
 <% if @product_batch.state == 'delist' %>
+<% end %>
+
+<% unless @product_batch.transport_batches.blank? %>
+	<table class="table table-striped well">
+	  <tr>
+	    <th>运输批次编码</th>
+	    <th>开始pool号</th>
+			<th>结束pool号</th>
+	    <th>印刷单元列表</th>
+			<th>文件名</th>
+	    <th></th>
+	  </tr>
+		
+		<% @product_batch.transport_batches.each do |transport| %>
+		  <tr>
+		    <td><%= transport.code %></td>
+		    <td><%= transport.start_pool_no %></td>
+		    <td><%= transport.end_pool_no %></td>
+				<td><%= transport.print_unit_completes %></td>
+				<td>transport_001.txt</td>
+		  </tr>
+		<% end %>
+	</table>
+<% end %>
+
+<% unless @product_batch.patches.blank? %>
+	<table class="table table-striped well">
+	  <tr>
+	    <th>补号文件编码</th>
+	    <th>总补票数</th>
+			<th>包号列表</th>
+			<th>文件名</th>
+	    <th></th>
+	  </tr>
+		
+		<% @product_batch.patches.each do |patch| %>
+		  <tr>
+		    <td><%= patch.code %></td>
+		    <td><%= patch.ticket_count %></td>
+		    <td><%= patch.pack_no_totals %></td>
+				<td>patch_001.txt</td>
+		  </tr>
+		<% end %>
+	</table>
 <% end %>
 
 <%= link_to '返回', worksheets_path, class: "btn btn-info" %>

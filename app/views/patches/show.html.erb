@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Code:</b>
+  <%= @patch.code %>
+</p>
+
+<p>
+  <b>Product batch:</b>
+  <%= @patch.product_batch %>
+</p>
+
+<p>
+  <b>Ticket count:</b>
+  <%= @patch.ticket_count %>
+</p>
+
+<p>
+  <b>Pack no totals:</b>
+  <%= @patch.pack_no_totals %>
+</p>
+
+
+<%= link_to 'Edit', edit_patch_path(@patch) %> |
+<%= link_to 'Back', patches_path %>

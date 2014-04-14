@@ -1,0 +1,29 @@
+<h1>Listing patches</h1>
+
+<table>
+  <tr>
+    <th>Code</th>
+    <th>Product batch</th>
+    <th>Ticket count</th>
+    <th>Pack no totals</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @patches.each do |patch| %>
+  <tr>
+    <td><%= patch.code %></td>
+    <td><%= patch.product_batch %></td>
+    <td><%= patch.ticket_count %></td>
+    <td><%= patch.pack_no_totals %></td>
+    <td><%= link_to 'Show', patch %></td>
+    <td><%= link_to 'Edit', edit_patch_path(patch) %></td>
+    <td><%= link_to 'Destroy', patch, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Patch', new_patch_path %>
