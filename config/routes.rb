@@ -64,6 +64,23 @@ Idgms::Application.routes.draw do
     end
   end
   
+  resources :patch_product do
+    member do
+      post 'patch_generate'
+      post 'print_generate'
+      post 'print_detect'
+      post 'upload'
+    end
+  end
+  
+  resources :patch_test do
+    member do
+      post 'patch_generate'
+      post 'print_generate'
+      post 'print_detect'
+    end
+  end
+  
   get "home/index"
 
   # The priority is based upon order of creation:

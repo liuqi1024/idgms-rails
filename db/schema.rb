@@ -66,6 +66,9 @@ ActiveRecord::Schema.define(:version => 20140414073346) do
     t.integer  "product_batch_id"
     t.integer  "ticket_count"
     t.string   "pack_no_totals"
+    t.string   "progress"
+    t.string   "progress_test"
+    t.string   "state"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
   end
@@ -79,6 +82,8 @@ ActiveRecord::Schema.define(:version => 20140414073346) do
     t.string   "nation_code"
     t.string   "state"
     t.string   "progress"
+    t.string   "progress_test"
+    t.string   "progress_sample"
     t.integer  "ticket_count"
     t.integer  "print_unit_count"
     t.integer  "pool_count"
@@ -144,6 +149,7 @@ ActiveRecord::Schema.define(:version => 20140414073346) do
     t.integer  "start_pool_no"
     t.integer  "end_pool_no"
     t.string   "print_unit_completes"
+    t.string   "state"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
   end

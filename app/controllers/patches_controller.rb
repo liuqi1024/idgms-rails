@@ -14,7 +14,8 @@ class PatchesController < ApplicationController
   # GET /patches/1.json
   def show
     @patch = Patch.find(params[:id])
-
+    @product_batch = @patch.product_batch
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @patch }
@@ -48,6 +49,7 @@ class PatchesController < ApplicationController
     array = Array.new
     5.times {array << rand(10)}
     @patch.pack_no_totals = array.to_s
+    @patch.state = 'initial'
 
     respond_to do |format|
       if @patch.save

@@ -9,6 +9,10 @@ class ProductBatch < ActiveRecord::Base
   
   PROGRESS = { '生成数据' => 1, '数据检测' => 2, '生成印刷数据' => 3 , '印刷数据检测' => 4, '上传生产数据' => 5 }
   
+  PROGRESS_TEST = { '生成数据' => 1, '生成印刷数据' => 2 , '印刷数据检测' => 3 }
+  
+  PROGRESS_SAMPLE = { '生成数据' => 1, '生成印刷数据' => 2 , '印刷数据检测' => 3 }
+  
   NATION_CODE = %w(35 36 37)
   
   def complete?

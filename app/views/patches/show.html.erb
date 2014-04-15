@@ -1,25 +1,71 @@
-<p id="notice"><%= notice %></p>
+<table class="table table-striped table-hover">
+	<tr>
+	  <td class="td-show">所属游戏:</td>
+	  <td><%= @product_batch.game.name %></td>
+	</tr>
+	
+	<tr>
+	  <td class="td-show">所属工作单:</td>
+	  <td><%= @product_batch.worksheet.code %></td>
+	</tr>
+	
+	<tr>
+	  <td class="td-show">所属生产批次:</td>
+	  <td><%= @product_batch.code %></td>
+	</tr>
+	
+	<tr>
+	  <td class="td-show">补号总票数:</td>
+	  <td><%= @patch.ticket_count %></td>
+	</tr>
+	
+	<tr>
+	  <td class="td-show">包号列表:</td>
+	  <td><%= @patch.pack_no_totals %></td>
+	</tr>
+</table>
 
-<p>
-  <b>Code:</b>
-  <%= @patch.code %>
-</p>
+<div class="well">
+	<div class="btn-group">
+		<%= link_to "补号数据:", '#', class: 'lead' %>
+	</div>
+	<div class="btn-group">
+		<%= link_to '生成数据 > ', patch_generate_patch_product_path(@patch), method: :post, 
+							class: @patch.progress.blank?? 'btn btn-success' : 'btn btn-danger disabled' %>
+							
+		<%= link_to '生成印刷数据 > ', print_generate_patch_product_path(@patch), method: :post, 
+							class: @patch.progress == '1'? 'btn btn-success' : 'btn btn-danger disabled' %>
+	
+		<%= link_to '印刷数据检测 > ', print_detect_patch_product_path(@patch), method: :post, 
+							class: @patch.progress == '2'? 'btn btn-success' : 'btn btn-danger disabled' %>
+	
+		<%= link_to '上传生产数据', upload_patch_product_path(@patch), method: :post, 
+							class: @patch.progress == '3'? 'btn btn-success' : 'btn btn-danger disabled' %>
+	</div>
+	<div class="result">
+		<hr/>
+		返回结果: <%= params[:result] %>
+	</div>
+</div>
 
-<p>
-  <b>Product batch:</b>
-  <%= @patch.product_batch %>
-</p>
+<div class="well">
+		<div class="btn-group">
+			<%= link_to "补号测试数据:", '#', class: 'lead' %>
+		</div>
+		<div class="btn-group">
+		<%= link_to '生成数据 > ', patch_generate_patch_test_path(@patch), method: :post, 
+							class: @patch.progress_test.blank?? 'btn btn-info' : 'btn btn-warning disabled' %>
+							
+		<%= link_to '生成印刷数据 > ', print_generate_patch_test_path(@patch), method: :post, 
+							class: @patch.progress_test == '1'? 'btn btn-info' : 'btn btn-warning disabled' %>
+	
+		<%= link_to '印刷数据检测', print_detect_patch_test_path(@patch), method: :post, 
+							class: @patch.progress_test == '2'? 'btn btn-info' : 'btn btn-warning disabled' %>
+	</div>
+	<div class="result">
+		<hr/>
+		返回结果: <%= params[:result_test] %>
+	</div>
+</div>
 
-<p>
-  <b>Ticket count:</b>
-  <%= @patch.ticket_count %>
-</p>
-
-<p>
-  <b>Pack no totals:</b>
-  <%= @patch.pack_no_totals %>
-</p>
-
-
-<%= link_to 'Edit', edit_patch_path(@patch) %> |
-<%= link_to 'Back', patches_path %>
+<%= link_to '返回', @patch.product_batch, class: "btn btn-info" %>

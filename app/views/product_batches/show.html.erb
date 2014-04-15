@@ -106,22 +106,30 @@
 <% end %>
 
 <% unless @product_batch.transport_batches.blank? %>
-	<table class="table table-striped well">
+	<!-- Button -->
+	<div class="controls text-right">
+		<%= button_to '生成兑奖文件', '', class: "btn btn-primary", method: :get %>
+	</div>
+	<table class="table table-striped well" id="transport_batches">
 	  <tr>
+			<th width="20"><%= check_box_tag 'check_all' %></th>
 	    <th>运输批次编码</th>
 	    <th>开始pool号</th>
 			<th>结束pool号</th>
 	    <th>印刷单元列表</th>
+			<th>状态</th>
 			<th>文件名</th>
 	    <th></th>
 	  </tr>
 		
 		<% @product_batch.transport_batches.each do |transport| %>
 		  <tr>
+				<td><%= check_box_tag 'transport_batch_ids[]', '', false if transport.state == 'initial' %></td>
 		    <td><%= transport.code %></td>
 		    <td><%= transport.start_pool_no %></td>
 		    <td><%= transport.end_pool_no %></td>
 				<td><%= transport.print_unit_completes %></td>
+				<td><%= TransportBatch::STATES[transport.state.to_sym] %></td>
 				<td>transport_001.txt</td>
 		  </tr>
 		<% end %>
@@ -129,13 +137,14 @@
 <% end %>
 
 <% unless @product_batch.patches.blank? %>
-	<table class="table table-striped well">
+	<table class="table table-striped well" id="patches">
 	  <tr>
 	    <th>补号文件编码</th>
 	    <th>总补票数</th>
 			<th>包号列表</th>
+			<th>状态</th>
 			<th>文件名</th>
-	    <th></th>
+			<th></th>
 	  </tr>
 		
 		<% @product_batch.patches.each do |patch| %>
@@ -143,7 +152,9 @@
 		    <td><%= patch.code %></td>
 		    <td><%= patch.ticket_count %></td>
 		    <td><%= patch.pack_no_totals %></td>
+				<td><%= Patch::STATES[patch.state.to_sym] %></td>
 				<td>patch_001.txt</td>
+				<td><%= link_to '生成补号数据', patch, class: 'label label-info' if patch.state == 'initial' %></td>
 		  </tr>
 		<% end %>
 	</table>
@@ -151,3 +162,24 @@
 
 <%= link_to '返回', worksheets_path, class: "btn btn-info" %>
 
+<script type="text/javascript" charset="utf-8">
+	var all_checked = false;
+	$('#check_all').click(toggle_checkbox);
+	
+	function toggle_checkbox() {
+		all_checked = !all_checked;
+		$.each($('#transport_batches :checkbox'), function(index, cb){
+			cb.checked = all_checked;
+		});	
+	}
+	
+	var all_checked_patch = false;
+	$('#check_all_patch').click(toggle_checkbox_patch);
+	
+	function toggle_checkbox_patch() {
+		all_checked_patch = !all_checked_patch;
+		$.each($('#patches :checkbox'), function(index, cb){
+			cb.checked = all_checked_patch;
+		});	
+	}
+</script>

@@ -50,6 +50,7 @@ class TransportBatchesController < ApplicationController
     array = Array.new
     5.times {array << rand(10)}
     @transport_batch.print_unit_completes = array.to_s
+    @transport_batch.state = 'initial'
 
     respond_to do |format|
       if @transport_batch.save
