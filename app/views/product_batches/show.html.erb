@@ -1,3 +1,5 @@
+<p id="notice"><%= notice %></p>
+
 <table class="table table-striped table-hover">
 	<tr>
 	  <td class="td-show">所属游戏:</td>
@@ -56,7 +58,7 @@
   <%= link_to '删除生产批次', @product_batch, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
 <% end %>
 
-<% if @product_batch.progress == 5.to_s %>
+<% if @product_batch.state == 'normal' && @product_batch.progress == 5.to_s %>
 	<div class="well">
 		<%= link_to '取运输批次文件', transport_batches_path(product_batch_id: @product_batch), method: :post, class: 'btn btn-primary' %>
 		<%= link_to '取补号文件', patches_path(product_batch_id: @product_batch), method: :post, class: 'btn btn-warning' %>
@@ -66,8 +68,11 @@
 	</div>
 <% end %>
 
-<% if @product_batch.state == 'normal' %>
-	<div class="well">
+<% if @product_batch.state == 'normal' && @product_batch.progress != 5.to_s %>
+	<div id="data-product" class="well">
+		<div class="btn-group">
+			<%= link_to "生产数据:", '#', class: 'lead btn btn-info disabled' %>
+		</div>
 		<div class="btn-group">
 			<%= link_to '生成数据 > ', data_generate_data_product_path(@product_batch), method: :post, 
 								class: @product_batch.progress.blank?? 'btn btn-success' : 'btn btn-danger disabled' %>
@@ -85,16 +90,69 @@
 								class: @product_batch.progress == '4'? 'btn btn-success' : 'btn btn-danger disabled' %>
 		</div>
 		
-		<div style="float:right;">
-			<%= link_to '样票数据', '', class: 'btn btn-inverse' %>
-			<%= link_to '样票测试数据', '', class: 'btn btn-inverse' %>
-		</div>
+		<!-- <div style="float:right;">
+			<button class="btn btn-info" type="button" onclick="$('#data-test').show();">样票数据</button>
+			<button class="btn btn-info" type="button" onclick="$('#data-sample').show();">样票测试数据</button>
+		</div> -->
 		
 		<div class="result">
 			<hr/>
 			返回结果: <%= params[:result] %>
 		</div>
 	</div>
+	
+	
+	<div id="data-test" class="well" style="display: true;">
+		<div class="btn-group">
+			<%= link_to "测试数据:", '#', class: 'lead btn btn-info disabled' %>
+		</div>
+		<div class="btn-group">
+			<%= link_to '生成数据 > ', data_generate_data_test_path(@product_batch), method: :post, 
+								class: @product_batch.progress_test.blank?? 'btn btn-success' : 'btn btn-warning disabled' %>
+			
+			<%= link_to '生成印刷数据 > ', print_generate_data_test_path(@product_batch), method: :post, 
+								class: @product_batch.progress_test == '1'? 'btn btn-success' : 'btn btn-warning disabled' %>
+			
+			<%= link_to '印刷数据检测', print_detect_data_test_path(@product_batch), method: :post, 
+								class: @product_batch.progress_test == '2'? 'btn btn-success' : 'btn btn-warning disabled' %>
+		</div>
+		
+		<!-- <div style="float:right;">
+			<button class="btn btn-inverse" type="button" onclick="$('#data-test').hide();">隐藏</button>
+		</div> -->
+		
+		<div class="result">
+			<hr/>
+			返回结果: <%= params[:result_test] %>
+		</div>
+	</div>
+	
+	
+	<div id="data-sample" class="well" style="display: true;">
+		<div class="btn-group">
+			<%= link_to "样票测试数据:", '#', class: 'lead btn btn-info disabled' %>
+		</div>
+		<div class="btn-group">
+			<%= link_to '生成数据 > ', data_generate_data_sample_path(@product_batch), method: :post, 
+								class: @product_batch.progress_sample.blank?? 'btn btn-success' : 'btn btn-warning disabled' %>
+			
+			<%= link_to '生成印刷数据 > ', print_generate_data_sample_path(@product_batch), method: :post, 
+								class: @product_batch.progress_sample == '1'? 'btn btn-success' : 'btn btn-warning disabled' %>
+			
+			<%= link_to '印刷数据检测', print_detect_data_sample_path(@product_batch), method: :post, 
+								class: @product_batch.progress_sample == '2'? 'btn btn-success' : 'btn btn-warning disabled' %>
+		</div>
+		
+		<!-- <div style="float:right;">
+			<button class="btn btn-inverse" type="button" onclick="$('#data-sample').hide();">隐藏</button>
+		</div> -->
+		
+		<div class="result">
+			<hr/>
+			返回结果: <%= params[:result_sample] %>
+		</div>
+	</div>
+	
 <% end %>
 
 <% if @product_batch.state == 'reject' %>
@@ -106,13 +164,8 @@
 <% end %>
 
 <% unless @product_batch.transport_batches.blank? %>
-	<!-- Button -->
-	<div class="controls text-right">
-		<%= button_to '生成兑奖文件', '', class: "btn btn-primary", method: :get %>
-	</div>
 	<table class="table table-striped well" id="transport_batches">
 	  <tr>
-			<th width="20"><%= check_box_tag 'check_all' %></th>
 	    <th>运输批次编码</th>
 	    <th>开始pool号</th>
 			<th>结束pool号</th>
@@ -124,13 +177,13 @@
 		
 		<% @product_batch.transport_batches.each do |transport| %>
 		  <tr>
-				<td><%= check_box_tag 'transport_batch_ids[]', '', false if transport.state == 'initial' %></td>
 		    <td><%= transport.code %></td>
 		    <td><%= transport.start_pool_no %></td>
 		    <td><%= transport.end_pool_no %></td>
 				<td><%= transport.print_unit_completes %></td>
 				<td><%= TransportBatch::STATES[transport.state.to_sym] %></td>
 				<td>transport_001.txt</td>
+				<td><%= link_to '生成兑奖文件', transport, class: 'label label-important' if transport.state == 'initial' %></td>
 		  </tr>
 		<% end %>
 	</table>

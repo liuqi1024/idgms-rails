@@ -15,6 +15,7 @@ class CreateGames < ActiveRecord::Migration
       t.integer :first_pack_no      #<FirstPackNo>：包起始编号，游戏中第一包的编号
       t.integer :first_pool_no      #<FirstPoolNo>：奖池起始编号，游戏中第一个奖池的编号
       t.integer :poolcount_per_printunit #<PoolCountPerPrintUnit>：每个印刷单元包含的pool数量
+      t.integer :random_no          #游戏随机算法数
       
       t.integer :current_pack_no    #当前已经印刷完成到的包号
       t.string :version

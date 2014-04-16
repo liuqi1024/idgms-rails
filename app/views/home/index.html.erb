@@ -1,6 +1,19 @@
 <div class="well">
 	<p class="text-center"><h3>即开票数据生成管理系统</h3></p>
-	<p class="">你的角色: <%= current_user.roles.collect(&:name).join(" ") %></p>
-	<p class="">可进行的操作: <%= current_user.operations.collect(&:name).join(" ") %></p>
+
+	<!-- <blockquote>
+		<p>该系统在已经独立开发完成的纸质即开游戏数据生成软件、纸质即开印刷数据转换软件、纸质即开游戏设奖数据检测软件、纸质即开游戏印刷数据检测软件的基础上，实现游戏数据的生成、转换、检测等功能，为工厂提供印刷数据，同是根据工厂生产装箱数据，生成运输数据和兑奖数据，提供给即开销售管理系统。实现数据生成的业务管理和查询功能，并实现数据生成等软件的版本的管理等功能。同时也为监管系统或第三方检测机构提供检测数据等。</p>
+	</blockquote> -->
 	
+	<blockquote>
+		<p class="text-info lead">姓名: <%= current_user.name %></p>
+	</blockquote>
+	
+	<blockquote>
+		<p class="text-info lead">角色: <%= current_user.roles.collect(&:name).join(" ") %></p>
+	</blockquote>
+	
+	<blockquote>
+		<p class="text-success">可进行的操作: <%= current_user.operations.collect(&:name).join(" ") %></p>
+	</blockquote>
 </div>

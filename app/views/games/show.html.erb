@@ -82,26 +82,42 @@
 	<% end %>
 </table>
 
-	<% if @game.state == 'initial' && @game.version == 1 %>
-	    <%= link_to '删除游戏', @game, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-	<% end %>
+<% unless @game.game_programs.blank? %>
+	<table class="table table-striped">
+	  <tr>
+	    <th>版本号</th>
+	    <th>升级日期</th>
+	  </tr>
+		
+		<% @game.game_programs.each do |program| %>
+		  <tr>
+		    <td><%= program.version %></td>
+		    <td><%= l program.created_at %></td>
+		  </tr>
+		<% end %>
+	</table>
+<% end %>
 
-	<% if @game.state == 'normal' %>
-			<%= link_to '创建工作单', edit_game_path(@game), class: 'btn btn-success' %>
-	    <%= link_to '升级版本', upload_game_path(@game), class: 'btn btn-warning' %>
-	    <%= link_to '游戏退市', @game, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-	<% end %>
+<% if @game.state == 'initial' && @game.version == 1 %>
+    <%= link_to '删除游戏', @game, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+<% end %>
 
-	<% if @game.state == 'reject' %>
-	    <%= link_to '重新部署', upload_game_path(@game), class: 'btn btn-warning' %>
-	    <%= link_to '删除游戏', @game, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-	<% end %>
+<% if @game.state == 'normal' %>
+		<%= link_to '创建工作单', edit_game_path(@game), class: 'btn btn-success' %>
+    <%= link_to '升级版本', upload_game_path(@game), class: 'btn btn-warning' %>
+    <%= link_to '游戏退市', @game, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+<% end %>
 
-	<% if @game.state == 'delist' %>
-	    <%= link_to '生成下市数据', edit_game_path(@game), class: 'btn btn-warning' %>
-	<% end %>
+<% if @game.state == 'reject' %>
+    <%= link_to '重新部署', upload_game_path(@game), class: 'btn btn-warning' %>
+    <%= link_to '删除游戏', @game, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+<% end %>
 
-	<%= link_to '返回', games_path, class: "btn btn-info" %>
+<% if @game.state == 'delist' %>
+    <%= link_to '生成下市数据', edit_game_path(@game), class: 'btn btn-warning' %>
+<% end %>
+
+<%= link_to '返回', games_path, class: "btn btn-info" %>
 
 
 

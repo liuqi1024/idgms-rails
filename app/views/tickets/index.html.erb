@@ -1,10 +1,23 @@
-<h1>Listing tickets</h1>
+<!-- Button -->
+<div class="controls text-right">
+	<%= button_to '新建彩票重现数据', new_ticket_path, class: "btn btn-primary", method: :get %>
+</div>
 
-<table>
+<div class="row-fluid">
+	<div class="span12">
+		<ul class="nav nav-tabs">
+				<li class="active"><%= link_to "数据重现历史", '' %></li>
+		</ul>
+	</div>
+</div>
+	
+<table class="table table-striped ">
   <tr>
-    <th>Ticket no</th>
-    <th>Game</th>
-    <th>Game group</th>
+    <th>票号</th>
+    <th>所属游戏</th>
+    <th>奖组编号</th>
+    <th>程序版本</th>
+    <th>创建时间</th>
     <th></th>
     <th></th>
     <th></th>
@@ -12,16 +25,15 @@
 
 <% @tickets.each do |ticket| %>
   <tr>
-    <td><%= ticket.ticket_no %></td>
-    <td><%= ticket.game %></td>
-    <td><%= ticket.game_group %></td>
-    <td><%= link_to 'Show', ticket %></td>
-    <td><%= link_to 'Edit', edit_ticket_path(ticket) %></td>
-    <td><%= link_to 'Destroy', ticket, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to ticket.ticket_no, ticket %></td>
+    <td><%= link_to ticket.game.name, ticket.game %></td>
+    <td><%= ticket.game_group.code rescue "" %></td>
+    <td><%= ticket.game_group.game_program.version rescue "" %></td>
+    <td><%= l ticket.created_at %></td>
+		<td><%= link_to '查看数据', ticket, class: 'label label-info' %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Ticket', new_ticket_path %>

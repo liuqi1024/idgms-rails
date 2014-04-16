@@ -36,7 +36,7 @@
     <td><%= link_to product_batch.worksheet.game.name, product_batch.worksheet.game %></td>
     <td><%= link_to product_batch.worksheet.code, product_batch.worksheet %></td>
 		<td><%= product_batch.print_unit_count %></td>
-    <td>数据检查完毕</td>
+    <td><%= ProductBatch::PROGRESS.key(product_batch.progress.to_i) rescue "" %></td>
 		<% if params[:state] == 'reject' %>
 			<td><%#= product_batch.desc %></td>
 		<% end %>

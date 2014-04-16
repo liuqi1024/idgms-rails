@@ -41,6 +41,12 @@ class TicketsController < ApplicationController
   # POST /tickets.json
   def create
     @ticket = Ticket.new(params[:ticket])
+    
+    #根据票号算出所属的游戏编号, 奖组编号
+    @ticket.game = Game.first
+    @ticket.game_group = GameGroup.first
+    
+    # TODO: 找到对应的程序版本,调用种子发生器
 
     respond_to do |format|
       if @ticket.save

@@ -30,7 +30,7 @@ class PatchProductController < ApplicationController
   def upload
     # 调用外部程序 ...
     
-    @patch.update_attribute(:progress, 4)
+    @patch.update_attributes(:progress => 4, :state => 'delist')
     result = 'upload is success.'
     redirect_to(patch_path(@patch, :result => result))
   end

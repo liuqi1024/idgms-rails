@@ -15,10 +15,12 @@ ActiveRecord::Schema.define(:version => 20140414073346) do
 
   create_table "game_groups", :force => true do |t|
     t.integer  "game_id"
+    t.integer  "game_program_id"
+    t.string   "code"
     t.string   "torrent"
     t.string   "serial_no"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   add_index "game_groups", ["game_id"], :name => "index_game_groups_on_game_id"
@@ -45,6 +47,7 @@ ActiveRecord::Schema.define(:version => 20140414073346) do
     t.integer  "first_pack_no"
     t.integer  "first_pool_no"
     t.integer  "poolcount_per_printunit"
+    t.integer  "random_no"
     t.integer  "current_pack_no"
     t.string   "version"
     t.string   "state"

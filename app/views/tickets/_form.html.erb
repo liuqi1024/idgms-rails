@@ -1,13 +1,20 @@
-<%= simple_form_for(@ticket) do |f| %>
-  <%= f.error_notification %>
+<div class="well">
+<%= simple_form_for(@ticket, :html => {:class => "form-horizontal"}) do |f| %>
 
-  <div class="form-inputs">
-    <%= f.input :ticket_no %>
-    <%= f.association :game %>
-    <%= f.association :game_group %>
-  </div>
+  <fieldset>
+    <div id="legend" class="">
+      <legend class="">请输入票号</legend>
+    </div>
+    
+		<%= f.input :ticket_no, label: "票号", :required => true, :input_html => {:class => 'input-xlarge'} %>
+    <div class="control-group">
+		</div>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
+  </fieldset>
+
+  <div class="actions">
+    <%= f.submit "提交", class: "btn btn-success" %>
+		<%= link_to '返回', tickets_path, class: "btn btn-info" %>
   </div>
 <% end %>
+</div>

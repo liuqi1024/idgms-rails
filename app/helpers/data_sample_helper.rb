@@ -1,0 +1,2 @@
+module DataSampleHelper
+end

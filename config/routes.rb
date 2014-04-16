@@ -2,7 +2,6 @@ Idgms::Application.routes.draw do
 
   resources :patches
 
-
   devise_for :users, :path_prefix => 'my'
   
   resources :users
@@ -22,7 +21,8 @@ Idgms::Application.routes.draw do
 
   resources :product_batches
 
-
+  resources :profile
+  
   resources :worksheets do
     member do
       post 'complete'
@@ -61,6 +61,22 @@ Idgms::Application.routes.draw do
       post 'print_generate'
       post 'print_detect'
       post 'upload'
+    end
+  end
+  
+  resources :data_test do
+    member do
+      post 'data_generate'
+      post 'print_generate'
+      post 'print_detect'
+    end
+  end
+  
+  resources :data_sample do
+    member do
+      post 'data_generate'
+      post 'print_generate'
+      post 'print_detect'
     end
   end
   

@@ -1,4 +1,6 @@
 class GameGroup < ActiveRecord::Base
   belongs_to :game
-  attr_accessible :serial_no, :torrent
+  belongs_to :game_program
+  
+  attr_protected false
 end

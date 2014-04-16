@@ -73,16 +73,19 @@ class GamesController < ApplicationController
   # 部署程序
   def deploy
     @game = Game.find params[:id]
-    @game.state = 'initial'
+    # @game.state = 'initial' if @game.game_programs.blank?
     if @game.version.blank?
       @game.version = 1
     else
       @game.version = params[:game][:version] unless params[:game][:version].blank?
     end
     
-    puts 'deploy success......'
-    puts params[:game]
     @game.save!
+    @game_program = GameProgram.new
+    @game_program.game = @game
+    @game_program.version = @game.version
+    @game_program.save!
+    
     redirect_to :controller => "games", :action => "show", :id => @game
   end
   
