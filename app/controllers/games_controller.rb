@@ -85,7 +85,7 @@ class GamesController < ApplicationController
       @game_program.game = @game
       @game_program.version = @game.version
       @game_program.save!
-      Feed.create owner_type: "game", owner_id: @game.id, user_id: current_user.id, operation: "deploy", desc: "部署游戏 - 版本: " + @game.version
+      Feed.create owner_type: "game", owner_id: @game.id, user_id: current_user.id, operation: "deploy", desc: "部署游戏 - 版本: " + @game.version.to_s
     else
       @game.state = 'initial'
     end
