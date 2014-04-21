@@ -15,6 +15,8 @@ class DataProductController < ApplicationController
     @game_group.save!
     
     @product_batch.update_attribute(:progress, 1)
+    Feed.create owner_type: "product_batch", owner_id: @product_batch.id, user_id: current_user.id, operation: "data_product", 
+          desc: "生产数据 - 生成程序"
     result = 'data generate is success.'
     redirect_to(product_batch_path(@product_batch, :result => result))
   end
@@ -23,6 +25,8 @@ class DataProductController < ApplicationController
     # 调用外部程序 ...
     
     @product_batch.update_attribute(:progress, 2)
+    Feed.create owner_type: "product_batch", owner_id: @product_batch.id, user_id: current_user.id, operation: "data_product", 
+          desc: "生产数据 - 数据检测"
     result = 'data detect is success.'
     redirect_to(product_batch_path(@product_batch, :result => result))
   end
@@ -31,6 +35,8 @@ class DataProductController < ApplicationController
     # 调用外部程序 ...
     
     @product_batch.update_attribute(:progress, 3)
+    Feed.create owner_type: "product_batch", owner_id: @product_batch.id, user_id: current_user.id, operation: "data_product", 
+          desc: "生产数据 - 生成印刷数据"
     result = 'print generate is success.'
     redirect_to(product_batch_path(@product_batch, :result => result))
   end
@@ -39,6 +45,8 @@ class DataProductController < ApplicationController
     # 调用外部程序 ...
     
     @product_batch.update_attribute(:progress, 4)
+    Feed.create owner_type: "product_batch", owner_id: @product_batch.id, user_id: current_user.id, operation: "data_product", 
+          desc: "生产数据 - 印刷数据检测"
     result = 'print detect is success.'
     redirect_to(product_batch_path(@product_batch, :result => result))
   end
@@ -47,6 +55,8 @@ class DataProductController < ApplicationController
     # 调用外部程序 ...
     
     @product_batch.update_attribute(:progress, 5)
+    Feed.create owner_type: "product_batch", owner_id: @product_batch.id, user_id: current_user.id, operation: "data_product", 
+          desc: "生产数据 - 上传生产数据"
     result = 'upload is success.'
     redirect_to @product_batch, notice: '文件已经成功上传至服务器.'
   end

@@ -20,9 +20,11 @@ class AuditGamesController < ApplicationController
     result = params[:commit]
     if result == '通过'
       @game.state = 'normal'
+      Feed.create owner_type: "game", owner_id: @game.id, user_id: current_user.id, operation: "audit", desc: "审核游戏 - 通过"
     elsif result == '驳回'
       @game.state = 'reject'
       @game.desc = params[:game][:desc]
+      Feed.create owner_type: "game", owner_id: @game.id, user_id: current_user.id, operation: "audit", desc: "审核游戏 - 驳回"
     end
     
     @game.save!

@@ -1,0 +1,15 @@
+<%= simple_form_for(@feed, :html => {:class => "form-horizontal"}) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :owner_type %>
+    <%= f.input :owner_id %>
+    <%= f.input :user_id %>
+    <%= f.input :operation %>
+    <%= f.input :desc %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

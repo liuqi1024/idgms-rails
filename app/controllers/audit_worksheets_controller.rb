@@ -20,9 +20,11 @@ class AuditWorksheetsController < ApplicationController
     result = params[:commit]
     if result == '通过'
       @worksheet.state = 'normal'
+      Feed.create owner_type: "worksheet", owner_id: @worksheet.id, user_id: current_user.id, operation: "audit", desc: "审核工作单 - 通过" 
     elsif result == '驳回'
       @worksheet.state = 'reject'
       @worksheet.desc = params[:worksheet][:desc]
+      Feed.create owner_type: "worksheet", owner_id: @worksheet.id, user_id: current_user.id, operation: "audit", desc: "审核工作单 - 驳回" 
     end
     
     @worksheet.save!

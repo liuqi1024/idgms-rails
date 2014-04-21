@@ -22,6 +22,7 @@ class CreateGames < ActiveRecord::Migration
       t.string :state
       t.datetime :completed_at
       t.text :desc
+      t.integer :creator_id
 
       t.timestamps
     end

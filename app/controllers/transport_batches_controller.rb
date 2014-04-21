@@ -48,12 +48,14 @@ class TransportBatchesController < ApplicationController
     @transport_batch.end_pool_no = 300
     @transport_batch.code = SecureRandom.random_number(10**6)
     array = Array.new
-    5.times {array << rand(10)}
+    3.times {array << rand(10)}
     @transport_batch.print_unit_completes = array.to_s
     @transport_batch.state = 'initial'
 
     respond_to do |format|
       if @transport_batch.save
+        Feed.create owner_type: "transport_batch", owner_id: @transport_batch.id, user_id: current_user.id, operation: "create", 
+              desc: "获取运输批次文件"
         format.html { redirect_to @prodcut_batch, notice: 'Transport batch was successfully created.' }
       else
         format.html { render action: "new" }
@@ -67,8 +69,11 @@ class TransportBatchesController < ApplicationController
     @transport_batch = TransportBatch.find(params[:id])
 
     respond_to do |format|
-      if @transport_batch.update_attributes(params[:transport_batch])
-        format.html { redirect_to @transport_batch, notice: 'Transport batch was successfully updated.' }
+      # if @transport_batch.update_attributes(params[:transport_batch])
+      if @transport_batch.update_attributes :state => "delist"
+        Feed.create owner_type: "transport_batch", owner_id: @transport_batch.id, user_id: current_user.id, operation: "update", 
+              desc: "生成兑奖文件"
+        format.html { redirect_to @transport_batch.product_batch, notice: '成功生成兑奖文件.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

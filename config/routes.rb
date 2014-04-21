@@ -1,5 +1,8 @@
 Idgms::Application.routes.draw do
 
+  resources :feeds
+
+
   resources :patches
 
   devise_for :users, :path_prefix => 'my'

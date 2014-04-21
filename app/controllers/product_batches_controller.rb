@@ -59,6 +59,7 @@ class ProductBatchesController < ApplicationController
 
     respond_to do |format|
       if @product_batch.save
+        Feed.create owner_type: "product_batch", owner_id: @product_batch.id, user_id: current_user.id, operation: "create", desc: "创建生产批次"
         format.html { redirect_to @product_batch, notice: 'Product batch was successfully created.' }
         format.json { render json: @product_batch, status: :created, location: @product_batch }
       else

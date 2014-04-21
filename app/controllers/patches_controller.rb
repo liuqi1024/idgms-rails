@@ -53,6 +53,8 @@ class PatchesController < ApplicationController
 
     respond_to do |format|
       if @patch.save
+        Feed.create owner_type: "patch", owner_id: @patch.id, user_id: current_user.id, operation: "create", 
+              desc: "获取补号文件"
         format.html { redirect_to @prodcut_batch, notice: 'Patch was successfully created.' }
       else
         format.html { render action: "new" }

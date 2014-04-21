@@ -53,6 +53,7 @@ class WorksheetsController < ApplicationController
 
     respond_to do |format|
       if @worksheet.save
+        Feed.create owner_type: "worksheet", owner_id: @worksheet.id, user_id: current_user.id, operation: "create", desc: "创建工作单" 
         format.html { redirect_to @worksheet, notice: 'Worksheet was successfully created.' }
         format.json { render json: @worksheet, status: :created, location: @worksheet }
       else

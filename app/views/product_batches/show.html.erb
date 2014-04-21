@@ -183,7 +183,7 @@
 				<td><%= transport.print_unit_completes %></td>
 				<td><%= TransportBatch::STATES[transport.state.to_sym] %></td>
 				<td>transport_001.txt</td>
-				<td><%= link_to '生成兑奖文件', transport, class: 'label label-important' if transport.state == 'initial' %></td>
+				<td><%= link_to '生成兑奖文件', transport, method: :put, data: { confirm: '确定生成兑奖文件?' }, class: 'label label-important' if transport.state == 'initial' %></td>
 		  </tr>
 		<% end %>
 	</table>

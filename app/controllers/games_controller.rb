@@ -58,6 +58,7 @@ class GamesController < ApplicationController
     @game.poolcount_per_printunit = 5
     
     @game.state = 'initial'
+    @game.creator = current_user
     
     if @game.save
       redirect_to upload_game_url(@game)
@@ -73,18 +74,23 @@ class GamesController < ApplicationController
   # 部署程序
   def deploy
     @game = Game.find params[:id]
-    # @game.state = 'initial' if @game.game_programs.blank?
     if @game.version.blank?
       @game.version = 1
     else
       @game.version = params[:game][:version] unless params[:game][:version].blank?
     end
     
+    unless @game.state == 'reject'
+      @game_program = GameProgram.new
+      @game_program.game = @game
+      @game_program.version = @game.version
+      @game_program.save!
+      Feed.create owner_type: "game", owner_id: @game.id, user_id: current_user.id, operation: "deploy", desc: "部署游戏 - 版本: " + @game.version
+    else
+      @game.state = 'initial'
+    end
+
     @game.save!
-    @game_program = GameProgram.new
-    @game_program.game = @game
-    @game_program.version = @game.version
-    @game_program.save!
     
     redirect_to :controller => "games", :action => "show", :id => @game
   end

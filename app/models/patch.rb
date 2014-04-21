@@ -1,6 +1,7 @@
 class Patch < ActiveRecord::Base
   belongs_to :product_batch
-  attr_accessible :code, :pack_no_totals, :ticket_count
+  # attr_accessible :code, :pack_no_totals, :ticket_count
+  attr_protected false
   
   STATES = { initial: '未使用', delist: '已完成' }
   

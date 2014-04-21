@@ -10,7 +10,7 @@ class RolesController < ApplicationController
   def create
     @role = Role.new(params[:role])
     if @role.save
-      redirect_to roles_url, notice: 'Ticket was successfully created.' 
+      redirect_to roles_url, notice: '角色 was successfully created.' 
     end
     
   end
@@ -28,7 +28,7 @@ class RolesController < ApplicationController
     @role = Role.find(params[:id])
     
     if @role.update_attributes(params[:role])
-      redirect_to roles_url, notice: 'Role was successfully updated.' 
+      redirect_to roles_url, notice: '角色 was successfully updated.' 
     else
       render action: "edit"
     end

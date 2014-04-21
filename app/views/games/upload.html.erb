@@ -10,7 +10,12 @@
 		
 		<%= f.input :version, label: "当前版本", :required => true, disabled: true, :input_html => {:class => 'input-xlarge'}%>
 		
-		<%= f.input :version, label: "新游戏版本", :required => true, :input_html => {:class => 'input-xlarge'} unless @game.version.blank? %>
+		<% if !@game.version.blank? && @game.state != 'reject' %>
+			<%= f.input :version, label: "新游戏版本", :required => true, :input_html => {:class => 'input-xlarge'} %>
+		<% elsif @game.state == 'reject' %>
+			<%= f.input :version, label: "新游戏版本", :required => true, as: :hidden, :input_html => {:class => 'input-xlarge'} %>
+		<% end %>
+
 		<p/>
     <div class="input string required">
       <label class="string required">生成程序</label>

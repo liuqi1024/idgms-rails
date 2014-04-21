@@ -1,0 +1,35 @@
+<%= form_tag url_for(feeds_path), class: 'form-inline', method: :get do %>
+	<%= select_tag 'user_id', options_for_select(User.all.collect {|u| [ u.name, u.id ] }),  
+				prompt: '按操作者查询', class: "input-small" %>
+	<%= select_tag 'owner', options_for_select(Hash[Feed::OWNER_TYPE.to_a.collect(&:reverse)]), 
+				prompt: '按业务类型查询', class: "input-small" %>
+	<input type="text" class="input-small" placeholder="2014/01/01"> -
+	<input type="text" class="input-small" placeholder="2014/04/30">
+	
+  <%= submit_tag '查询', class: 'btn btn-info' %>
+	
+<% end %>
+
+<table class="table table-striped ">
+  <tr>
+    <th>操作者</th>
+    <th>操作对象</th>
+    <th>操作对象编号</th>
+    <th>操作类型</th>
+    <th>时间</th>
+    <th>描述</th>
+  </tr>
+
+<% @feeds.each do |feed| %>
+  <tr>
+    <td><%= User.find(feed.user_id).name %></td>
+    <td><%= Feed::OWNER_TYPE[feed.owner_type.to_sym] %></td>
+    <td><%= feed.owner_id %></td>
+    <td><%= feed.operation %></td>
+    <td><%= l feed.created_at %></td>
+    <td><%= feed.desc %></td>
+  </tr>
+<% end %>
+</table>
+<%= will_paginate @feeds %>
+<br />
