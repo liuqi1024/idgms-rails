@@ -1,9 +1,16 @@
 <%= simple_form_for @role, :html => {:class => 'form-horizontal well'} do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
+  <div class="form-inputs" id="roles">
     <%= f.input :name, label: "角色名称" %>
-		
+		<div class="control-group check_boxes optional role_operations">
+			<label class="check_boxes optional control-label">全选</label>
+			<div class="controls">
+				<label class="checkbox">
+					<%= check_box_tag 'check_all' %>
+				</label>
+			</div>
+		</div>
 		<%= f.association :operations, as: :check_boxes, label: "权限" %>
   </div>
 	<p></p>
@@ -13,3 +20,16 @@
 		<%= link_to '返回', roles_path, class: "btn btn-info" %>
   </div>
 <% end %>
+
+
+<script type="text/javascript" charset="utf-8">
+	var all_checked = false;
+	$('#check_all').click(toggle_checkbox);
+	
+	function toggle_checkbox() {
+		all_checked = !all_checked;
+		$.each($('#roles :checkbox'), function(index, cb){
+			cb.checked = all_checked;
+		});	
+	}
+</script>

@@ -4,6 +4,6 @@ class Operation < ActiveRecord::Base
   has_many :role_operations
   has_many :roles, :through => :role_operations
   
-  OPERATONS = %w{ 游戏部署 游戏审核 用户管理 角色管理 游戏管理 工作单管理 工作单审核 生产批次管理 生产批次审核 印厂管理 系统管理 数据重现 生产数据 生产补号 测试数据 测试补号 }
+  OPERATONS = %w{ 游戏部署 游戏审核 用户管理 角色管理 游戏管理 工作单管理 工作单审核 生产批次管理 生产批次审核 系统管理 数据重现 生产数据 生产补号 测试数据 测试补号 }
   
 end

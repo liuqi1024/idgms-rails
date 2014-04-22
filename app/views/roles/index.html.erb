@@ -13,7 +13,7 @@
 
 <% @roles.each do |role| %>
   <tr>
-    <td><%= link_to role.name, role %></td>
+    <td><%= link_to role.name, edit_role_path(role) %></td>
     <td><%#= ticket.game %></td>
     <td><%= link_to '编辑', edit_role_path(role) %></td>
     <td><%= link_to '删除', role, method: :delete, data: { confirm: 'Are you sure?' } %></td>

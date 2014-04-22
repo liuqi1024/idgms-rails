@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(:version => 20140421022318) do
     t.string   "state"
     t.datetime "completed_at"
     t.text     "desc"
+    t.integer  "creator_id"
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
   end
