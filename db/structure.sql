@@ -1,3 +1,15 @@
+CREATE TABLE `feeds` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `owner_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `owner_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `operation` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `desc` text COLLATE utf8_unicode_ci,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 CREATE TABLE `game_groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `game_id` int(11) DEFAULT NULL,
@@ -19,7 +31,7 @@ CREATE TABLE `game_programs` (
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_game_programs_on_game_id` (`game_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `games` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -41,10 +53,11 @@ CREATE TABLE `games` (
   `state` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `completed_at` datetime DEFAULT NULL,
   `desc` text COLLATE utf8_unicode_ci,
+  `creator_id` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `operations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -53,7 +66,7 @@ CREATE TABLE `operations` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `patches` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -97,7 +110,7 @@ CREATE TABLE `product_batches` (
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_product_batches_on_worksheet_id` (`worksheet_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `product_units` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -118,7 +131,7 @@ CREATE TABLE `role_operations` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `roles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -142,6 +155,9 @@ CREATE TABLE `tickets` (
   `ticket_no` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `game_id` int(11) DEFAULT NULL,
   `game_group_id` int(11) DEFAULT NULL,
+  `generate_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `state` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `desc` text COLLATE utf8_unicode_ci,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -153,8 +169,7 @@ CREATE TABLE `transport_batches` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `product_batch_id` int(11) DEFAULT NULL,
   `code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `start_pool_no` int(11) DEFAULT NULL,
-  `end_pool_no` int(11) DEFAULT NULL,
+  `pool_totals` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `print_unit_completes` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `state` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL,
@@ -206,11 +221,13 @@ CREATE TABLE `worksheets` (
   `current_pack_no` int(11) DEFAULT NULL,
   `current_pool_no` int(11) DEFAULT NULL,
   `current_subgame_no` int(11) DEFAULT NULL,
+  `start_package_no` int(11) DEFAULT NULL,
+  `end_package_no` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_worksheets_on_game_id` (`game_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO schema_migrations (version) VALUES ('20140328053100');
 
@@ -239,3 +256,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140402025908');
 INSERT INTO schema_migrations (version) VALUES ('20140402025944');
 
 INSERT INTO schema_migrations (version) VALUES ('20140414073346');
+
+INSERT INTO schema_migrations (version) VALUES ('20140421022318');

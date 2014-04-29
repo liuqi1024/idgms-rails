@@ -41,6 +41,7 @@ class TicketsController < ApplicationController
   # POST /tickets.json
   def create
     @ticket = Ticket.new(params[:ticket])
+    @ticket.state = 'initial'
     
     #根据票号算出所属的游戏编号, 奖组编号
     @ticket.game = Game.first
@@ -63,6 +64,7 @@ class TicketsController < ApplicationController
   # PUT /tickets/1.json
   def update
     @ticket = Ticket.find(params[:id])
+    @ticket.state = 'commit'
 
     respond_to do |format|
       if @ticket.update_attributes(params[:ticket])

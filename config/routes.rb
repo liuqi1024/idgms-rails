@@ -57,6 +57,12 @@ Idgms::Application.routes.draw do
     end
   end
   
+  resources :audit_tickets do
+    member do
+      post 'audit'
+    end
+  end
+  
   resources :data_product do
     member do
       post 'data_generate'

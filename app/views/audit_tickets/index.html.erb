@@ -1,0 +1,43 @@
+<div class="row-fluid">
+	<div class="span12">
+		<ul class="nav nav-tabs">
+				<li class="active">
+					<a href="#">待审核数据票</a>
+				</li>
+		</ul>
+	</div>
+</div>
+	
+<table class="table table-striped ">
+  <tr>
+    <th>票号</th>
+    <th>所属游戏</th>
+    <th>所属奖组</th>
+    <th>程序版本</th>
+    <th>生产日期</th>
+    <th>生成类型</th>
+		<% if params[:state] == 'reject' %>
+			<th>驳回原因</th>
+		<% end %>
+    <th></th>
+  </tr>
+
+<% @tickets.each do |ticket| %>
+  <tr>
+    <td><%= link_to ticket.ticket_no, audit_ticket_path(ticket) %></td>
+    <td><%= link_to ticket.game.name, ticket.game %></td>
+    <td><%= ticket.game_group.code %></td>
+    <td><%= ticket.game_group.game_program.version %></td>
+    <td><%= l ticket.created_at %></td>
+    <td><%= ticket.generate_type %></td>
+		<% if params[:state] == 'reject' %>
+			<td><%= ticket.desc %></td>
+		<% end %>
+		<td><%= link_to '详细信息', audit_ticket_path(ticket), class: 'label label-info' %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+

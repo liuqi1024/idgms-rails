@@ -1,34 +1,59 @@
-<table class="table table-striped table-hover">
-	<tr>
-	  <td class="td-show">票号:</td>
-	  <td><%= @ticket.ticket_no %></td>
-	</tr>
-	  
-	<tr>
-	  <td class="td-show">所属游戏:</td>
-	  <td><%= @ticket.game.name %></td>
-	</tr>
-	
-	<tr>
-	  <td class="td-show">所属奖组:</td>
-	  <td><%= @ticket.game_group.code %></td>
-	</tr>
-	
-	<tr>
-	  <td class="td-show">程序版本:</td>
-	  <td><%= @ticket.game_group.game_program.version %></td>
-	</tr>
-	
-	<tr>
-	  <td class="td-show">创建时间:</td>
-	  <td><%= l @ticket.created_at %></td>
-	</tr>
-	
-	<tr>
-	  <td class="td-show">数据重现结果:</td>
-	  <td>......</td>
-	</tr>
-	
-</table>
+<%= simple_form_for(@ticket, :html => {:class => "form-horizontal"}) do |f| %>
 
-<%= link_to '返回', tickets_path, class: "btn btn-info" %>
+	<table class="table table-striped table-hover">
+		<tr>
+		  <td class="td-show">票号:</td>
+		  <td><%= @ticket.ticket_no %></td>
+		</tr>
+	  
+		<tr>
+		  <td class="td-show">所属游戏:</td>
+		  <td><%= @ticket.game.name %></td>
+		</tr>
+	
+		<tr>
+		  <td class="td-show">所属奖组:</td>
+		  <td><%= @ticket.game_group.code %></td>
+		</tr>
+	
+		<tr>
+		  <td class="td-show">程序版本:</td>
+		  <td><%= @ticket.game_group.game_program.version %></td>
+		</tr>
+	
+		<tr>
+		  <td class="td-show">创建时间:</td>
+		  <td><%= l @ticket.created_at %></td>
+		</tr>
+		
+		<tr>
+		  <td class="td-show">当前状态:</td>
+		  <td><%= Ticket::STATES[@ticket.state.to_sym] %></td>
+		</tr>
+		
+		<tr>
+		  <td class="td-show">重现方式:</td>
+		  <td><%= f.input :generate_type, as: :select, collection: Ticket::GENERATE_YTPE, :required => true, label: false %></td>
+		</tr>
+		
+		<% if @ticket.state == 'reject' %>
+			<tr>
+			  <td class="td-show">驳回原因:</td>
+			  <td><%= @ticket.desc %></td>
+			</tr>
+		<% end %>
+		
+		<% if @ticket.state == 'delist' %>
+			<tr>
+			  <td class="td-show">数据重现结果:</td>
+			  <td>返回数据信息...</td>
+			</tr>
+		<% end %>
+		
+	</table>
+
+	<%= f.submit "提交审核", class: "btn btn-success" unless @ticket.state == 'commit' || @ticket.state == 'delist' %>
+
+	<%= link_to '返回', tickets_path, class: "btn btn-info" %>
+
+<% end %>

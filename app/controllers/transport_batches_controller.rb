@@ -44,8 +44,9 @@ class TransportBatchesController < ApplicationController
     @prodcut_batch = ProductBatch.find(params[:product_batch_id])
     @transport_batch = TransportBatch.new
     @transport_batch.product_batch = @prodcut_batch
-    @transport_batch.start_pool_no = 100
-    @transport_batch.end_pool_no = 300
+    # @transport_batch.start_pool_no = 100
+    # @transport_batch.end_pool_no = 300
+    @transport_batch.pool_totals = [12, 18, 20]
     @transport_batch.code = SecureRandom.random_number(10**6)
     array = Array.new
     3.times {array << rand(10)}

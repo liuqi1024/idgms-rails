@@ -150,6 +150,9 @@ ActiveRecord::Schema.define(:version => 20140421022318) do
     t.string   "ticket_no"
     t.integer  "game_id"
     t.integer  "game_group_id"
+    t.string   "generate_type"
+    t.string   "state"
+    t.text     "desc"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
@@ -160,8 +163,7 @@ ActiveRecord::Schema.define(:version => 20140421022318) do
   create_table "transport_batches", :force => true do |t|
     t.integer  "product_batch_id"
     t.string   "code"
-    t.integer  "start_pool_no"
-    t.integer  "end_pool_no"
+    t.string   "pool_totals"
     t.string   "print_unit_completes"
     t.string   "state"
     t.datetime "created_at",           :null => false
@@ -212,6 +214,8 @@ ActiveRecord::Schema.define(:version => 20140421022318) do
     t.integer  "current_pack_no"
     t.integer  "current_pool_no"
     t.integer  "current_subgame_no"
+    t.integer  "start_package_no"
+    t.integer  "end_package_no"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
   end

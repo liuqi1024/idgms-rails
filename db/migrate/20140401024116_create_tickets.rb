@@ -4,6 +4,9 @@ class CreateTickets < ActiveRecord::Migration
       t.string :ticket_no
       t.references :game
       t.references :game_group
+      t.string     :generate_type
+      t.string     :state
+      t.text       :desc
 
       t.timestamps
     end

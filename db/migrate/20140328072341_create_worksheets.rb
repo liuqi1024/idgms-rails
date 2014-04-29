@@ -15,6 +15,9 @@ class CreateWorksheets < ActiveRecord::Migration
       t.integer     :current_pool_no        #当前印刷到的pool号
       t.integer     :current_subgame_no     #当前印刷到的奖组号
       
+      t.integer     :start_package_no       #起始包号
+      t.integer     :end_package_no         #结束包号
+      
       t.timestamps
     end
     add_index :worksheets, :game_id

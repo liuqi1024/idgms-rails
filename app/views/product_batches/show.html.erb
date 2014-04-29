@@ -60,6 +60,7 @@
 	<div class="well">
 		<%= link_to '取运输批次文件', transport_batches_path(product_batch_id: @product_batch), method: :post, class: 'btn btn-primary' %>
 		<%= link_to '取补号文件', patches_path(product_batch_id: @product_batch), method: :post, class: 'btn btn-warning' %>
+		<%= link_to '确认完成', '', method: :post, data: { confirm: '确认生产批次已完成?' }, class: 'btn btn-success' %>
 		<% if @product_batch.complete? %>
 			<%= link_to '确认完成', complete_worksheet_path(@product_batch), method: :post, data: { confirm: '确认工作单已完成?' }, class: 'btn btn-success' %>
 		<% end %>
@@ -165,8 +166,7 @@
 	<table class="table table-striped well" id="transport_batches">
 	  <tr>
 	    <th>运输批次编码</th>
-	    <th>开始pool号</th>
-			<th>结束pool号</th>
+	    <th>pool号列表</th>
 	    <th>印刷单元列表</th>
 			<th>状态</th>
 			<th>文件名</th>
@@ -176,8 +176,7 @@
 		<% @product_batch.transport_batches.each do |transport| %>
 		  <tr>
 		    <td><%= transport.code %></td>
-		    <td><%= transport.start_pool_no %></td>
-		    <td><%= transport.end_pool_no %></td>
+		    <td><%= transport.pool_totals %></td>
 				<td><%= transport.print_unit_completes %></td>
 				<td><%= TransportBatch::STATES[transport.state.to_sym] %></td>
 				<td>transport_001.txt</td>
